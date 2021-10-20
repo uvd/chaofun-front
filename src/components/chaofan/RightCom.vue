@@ -318,7 +318,7 @@
     background-color: #999;
   }
   .rright{
-    max-height: calc(100vh - 114px);
+    // max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;
