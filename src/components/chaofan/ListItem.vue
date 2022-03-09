@@ -48,14 +48,21 @@
           :index="index"
           :order="order"
         ></itemTopTitle>
-        <div v-if="item.type != 'link'" :class="[{'title': !item.isPin},{'pin_title': item.isPin}]">
+        <div
+          v-if="item.type != 'link'"
+          :class="[{ title: !item.isPin }, { pin_title: item.isPin }]"
+        >
           <!-- <span class="zhiding">置顶</span>  -->
           <div v-if="item.tags.length" class="tags">
-            <div  v-for="(it, ins) in item.tags" :key="ins">
-                <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
-              ># {{ it.name }}</span>
+            <div v-for="(it, ins) in item.tags" :key="ins">
+              <span
+                :style="{
+                  backgroundColor: it.backgroundColor || '#ff9300',
+                  color: it.fontColor || '#fff',
+                }"
+                ># {{ it.name }}</span
+              >
             </div>
-            
           </div>
           {{ item.title }}
         </div>
@@ -77,35 +84,31 @@
 
           <!-- 图片 -->
           <itemImage
-              @toDetail="toDetail"
-              v-if="item.type == 'image'" :item="item"></itemImage>
+            @toDetail="toDetail"
+            v-if="item.type == 'image'"
+            :item="item"
+          ></itemImage>
 
           <div @click.stop="">
             <!-- 视频 -->
-            <div v-if="!ISPHONE&&item.type == 'gif'">
+            <div v-if="!ISPHONE && item.type == 'gif'">
               <itemGif
-                  @toDetail="toDetail"
-                  :isDetail="false"
-                  :item="item"
+                @toDetail="toDetail"
+                :isDetail="false"
+                :item="item"
               ></itemGif>
             </div>
-            
-            <div v-if="ISPHONE&&item.type == 'gif'" class="inner_videoc">
+
+            <div v-if="ISPHONE && item.type == 'gif'" class="inner_videoc">
               <div v-if="!item.play" class="item_video">
                 <!-- <div @click.stop="toDetail(item)" class="title">
-                  {{ item.title }}
-                </div> -->
+                    {{ item.title }}
+                  </div> -->
                 <div
                   @click="playVideo(index, item, 0)"
                   :class="['inner_prev', { inner_prev_phone: ISPHONE }]"
                 >
-                  <img
-                    class="coverss"
-                    :src="
-                      imgOrigin +item.cover
-                    "
-                    alt=""
-                  />
+                  <img class="coverss" :src="imgOrigin + item.cover" alt="" />
                   <img
                     class="inner_play"
                     src="../../assets/images/bg/play.png"
@@ -126,8 +129,8 @@
             <div v-if="item.type == 'inner_video'" class="inner_videoc">
               <div v-if="!item.play" class="item_video">
                 <!-- <div @click.stop="toDetail(item)" class="title">
-                  {{ item.title }}
-                </div> -->
+                    {{ item.title }}
+                  </div> -->
                 <div
                   @click="playVideo(index, item, 0)"
                   :class="['inner_prev', { inner_prev_phone: ISPHONE }]"
@@ -167,15 +170,17 @@
             class="item_video"
           >
             <!-- <div class="title">
-              {{ item.title }}
-            </div> -->
+                {{ item.title }}
+              </div> -->
             <div @click.stop="" class="video">
               <img
                 v-if="!item.play && item.cover"
                 class="coverss"
                 @click="playVideo(index, item, 0)"
                 :src="
-                  imgOrigin + item.cover + '?x-oss-process=image/resize,h_256/format,webp/quality,q_75'
+                  imgOrigin +
+                  item.cover +
+                  '?x-oss-process=image/resize,h_256/format,webp/quality,q_75'
                 "
                 alt=""
               />
@@ -240,13 +245,12 @@
 
           <!-- 投票 -->
           <itemPrediction
-              v-if="item.type == 'prediction'"
-              @callBack="callBack"
-              :index="index"
-              :item="item"
-              :isPredictionPage="isPredictionPage"
+            v-if="item.type == 'prediction'"
+            @callBack="callBack"
+            :index="index"
+            :item="item"
+            :isPredictionPage="isPredictionPage"
           ></itemPrediction>
-
 
           <!-- 转发 -->
           <div
@@ -281,9 +285,9 @@
               </div>
               <!-- 图片 -->
               <itemImage
-                  @toDetail="toDetail"
-                  v-if="item.sourcePost.type == 'image'"
-                  :item="item.sourcePost"
+                @toDetail="toDetail"
+                v-if="item.sourcePost.type == 'image'"
+                :item="item.sourcePost"
               ></itemImage>
               <!-- 视频 -->
               <itemGif
@@ -454,29 +458,29 @@
             </span>
           </div>
           <div>
-            <i class="el-icon-s-comment"></i>
+            <el-icon><el-icon-s-comment /></el-icon>
             <span style="padding: 0 2px">{{ item.comments }} </span> 评论
           </div>
           <el-dropdown @command="handleCommand" trigger="click">
             <span @click.stop="" class="el-dropdown-link">
-              <i class="el-icon-share"></i> 分享
+              <el-icon><el-icon-share /></el-icon> 分享
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 :command="{ type: 'copy', item: item }"
                 v-clipboard:copy="message"
                 v-clipboard:success="onCopy"
-                icon="el-icon-document-copy"
+                :icon="ElIconDocumentCopy"
                 >复制链接</el-dropdown-item
               >
               <el-dropdown-item
                 :command="{ type: 'share', item: item }"
-                icon="el-icon-s-promotion"
+                :icon="ElIconSPromotion"
                 >转发到</el-dropdown-item
               >
               <el-dropdown-item
                 :command="{ type: 'shareWeibo', item: item }"
-                icon="el-icon-s-promotion"
+                :icon="ElIconSPromotion"
                 >分享到微博</el-dropdown-item
               >
             </el-dropdown-menu>
@@ -485,15 +489,16 @@
             :class="['b_icon', { save_active: item.save }]"
             @click.stop="savePost(item)"
           >
-            <i class="el-icon-s-help"></i>
+            <el-icon><el-icon-s-help /></el-icon>
             <span style="padding: 0 2px">{{
-              item.save ? "已收藏" : "收藏"
+              item.save ? '已收藏' : '收藏'
             }}</span>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="isShowToTopButton"
+    <div
+      v-if="isShowToTopButton"
       @click="toTop"
       :class="[ISPHONE ? 'scroll_to_top_phone' : 'scroll_to_top']"
     >
@@ -512,93 +517,49 @@
 </template>
 
 <script>
-import * as api from "@/api/api";
-import VueClipboard from "vue-clipboard2";
-import forward from "./Forward";
-import Vue from "vue";
+import {
+  SComment as ElIconSComment,
+  Share as ElIconShare,
+  SHelp as ElIconSHelp,
+  DocumentCopy as ElIconDocumentCopy,
+  SPromotion as ElIconSPromotion,
+} from '@element-plus/icons'
+import * as api from '@/api/api'
+import VueClipboard from 'vue-clipboard2'
+import forward from './Forward'
+import Vue from 'vue'
 // import { Dialog } from "vant";
-import videoDialog from "./videoDialog";
+import videoDialog from './videoDialog'
 // import "vant/lib/dialog/style";
-Vue.use(VueClipboard);
+Vue.use(VueClipboard)
 
-import itemTopTitle from "./component/itemTopTitle";
-import itemLink from "./component/itemLink";
-import itemImage from "./component/itemImage";
-import itemGif from "./component/itemGif";
-import itemVideo from "./component/itemVideo";
-import itemIframeVideo from "./component/itemIframeVideo";
-import itemArticle from "./component/itemArticle";
-import itemVote from "./component/itemVote";
-import itemPrediction from "./component/itemPrediction";
-import itemForwardTitle from "./component/itemForwardTitle";
+import itemTopTitle from './component/itemTopTitle'
+import itemLink from './component/itemLink'
+import itemImage from './component/itemImage'
+import itemGif from './component/itemGif'
+import itemVideo from './component/itemVideo'
+import itemIframeVideo from './component/itemIframeVideo'
+import itemArticle from './component/itemArticle'
+import itemVote from './component/itemVote'
+import itemPrediction from './component/itemPrediction'
+import itemForwardTitle from './component/itemForwardTitle'
 
-import forwardH5 from "../h5/forward";
+import forwardH5 from '../h5/forward'
 export default {
-  name: "list-item",
   data() {
     return {
-      imgs: ["", "", "", "", ""],
+      imgs: ['', '', '', '', ''],
       shows: false,
-      videoData: "",
+      videoData: '',
       top: 0,
       canTo: true,
-      message: "",
+      message: '',
       dialogs: {
         dialogVisible: false,
         data: {},
       },
-    };
-  },
-  props: {
-
-    isShowToTopButton: {
-      type: Boolean,
-      default: true
-    },
-
-    isPredictionPage: {
-      type: Boolean,
-      default: false
-    },
-    lists: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    isindex: {
-      type: Boolean,
-      default: false,
-    },
-    pagenum: {
-      type: Number,
-      default: 1,
-    },
-    marker: {
-      type: String,
-      default: "",
-    },
-    keys: {
-      type: String,
-      default: "",
-    },
-    isMy: {
-      type: Boolean,
-      default: false,
-    },
-    whichOne: {
-      type: String,
-      default: "",
-    },
-    datas: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    order: {
-      type: String,
-      default: "",
+      ElIconDocumentCopy,
+      ElIconSPromotion,
     }
   },
   components: {
@@ -615,28 +576,83 @@ export default {
     itemPrediction,
     itemForwardTitle,
     itemVideo,
+    ElIconSComment,
+    ElIconShare,
+    ElIconSHelp,
+  },
+  name: 'list-item',
+  props: {
+    isShowToTopButton: {
+      type: Boolean,
+      default: true,
+    },
+
+    isPredictionPage: {
+      type: Boolean,
+      default: false,
+    },
+    lists: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+    isindex: {
+      type: Boolean,
+      default: false,
+    },
+    pagenum: {
+      type: Number,
+      default: 1,
+    },
+    marker: {
+      type: String,
+      default: '',
+    },
+    keys: {
+      type: String,
+      default: '',
+    },
+    isMy: {
+      type: Boolean,
+      default: false,
+    },
+    whichOne: {
+      type: String,
+      default: '',
+    },
+    datas: {
+      type: Object,
+      default() {
+        return {}
+      },
+    },
+    order: {
+      type: String,
+      default: '',
+    },
   },
   created() {
-    this.top = localStorage.getItem("storedata")
-      ? JSON.parse(localStorage.getItem("storedata")).top
-      : 0;
+    this.top = localStorage.getItem('storedata')
+      ? JSON.parse(localStorage.getItem('storedata')).top
+      : 0
     this.lists.forEach((item) => {
-      if (item.type == "video"||(this.ISPHONE&&item.type == "gif")) {
-        item.play = false;
+      if (item.type == 'video' || (this.ISPHONE && item.type == 'gif')) {
+        item.play = false
       }
-    });
+    })
   },
   mounted() {
     if (this.$route.query.time) {
       // console.log("this.top", this.top);
-      this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
+      this.$('.infinite-list').animate({ scrollTop: this.top }, 10)
       setTimeout(() => {
-        localStorage.removeItem("storedata");
-        localStorage.removeItem("spage");
-      }, 1000);
+        localStorage.removeItem('storedata')
+        localStorage.removeItem('spage')
+      }, 1000)
     } else {
-      localStorage.removeItem("storedata");
-      localStorage.removeItem("spage");
+      localStorage.removeItem('storedata')
+      localStorage.removeItem('spage')
     }
   },
   destroyed() {},
@@ -644,46 +660,46 @@ export default {
     doFocued(bool, id) {
       this.lists.forEach((it) => {
         if (it.userInfo.userId == id) {
-          console.log();
+          console.log()
           if (bool) {
-            it.userInfo.focused = false;
+            it.userInfo.focused = false
           } else {
-            it.userInfo.focused = true;
+            it.userInfo.focused = true
           }
         }
-      });
+      })
     },
     callBack(index, data) {
-      console.log(index, data);
-      this.lists.splice(index, 1, data);
+      console.log(index, data)
+      this.lists.splice(index, 1, data)
     },
-    
+
     getPostInfo(postId) {
-      api.getPostInfo({ postId }).then((res) => {});
+      api.getPostInfo({ postId }).then((res) => {})
     },
 
     checkoutVote(list) {
-      var a = false;
+      var a = false
       list.forEach((item) => {
         if (item.optionVote) {
-          a = true;
+          a = true
         }
-      });
-      return a;
+      })
+      return a
     },
 
     doMoreImgStyle(item, item2) {
       return {
         // 'width':
-        height: (231 * item.height) / item.width + "px",
-        "background-image": `url(${this.imgOrigin + item2})`,
-      };
+        height: (231 * item.height) / item.width + 'px',
+        'background-image': `url(${this.imgOrigin + item2})`,
+      }
     },
     doImgClass(imgs) {
       if (imgs.length == 2 || imgs.length == 4) {
-        return "two_img";
+        return 'two_img'
       } else {
-        return "three_img";
+        return 'three_img'
       }
     },
     doPlay(e) {
@@ -692,29 +708,29 @@ export default {
     playVideo(index, item, t) {
       if (index || index === 0) {
         this.lists.forEach((i) => {
-          i.play = false;
-        });
-        item.play = true;
-        var i = this.lists[index];
+          i.play = false
+        })
+        item.play = true
+        var i = this.lists[index]
         if (t) {
-          i.sourcePost = item;
+          i.sourcePost = item
         } else {
-          i = item;
+          i = item
         }
-        this.lists.splice(index, 1, i);
+        this.lists.splice(index, 1, i)
       } else {
-        console.log("开始暂停------------------------");
+        console.log('开始暂停------------------------')
         this.lists.forEach((i) => {
-          i.play = false;
-        });
-        var a = this.lists[this.lists.length - 1];
-        this.lists.splice(this.lists.length - 1, 1, a);
+          i.play = false
+        })
+        var a = this.lists[this.lists.length - 1]
+        this.lists.splice(this.lists.length - 1, 1, a)
       }
     },
     handleCommand(data) {
-      if (data.type == "copy") {
-        this.share(data.item);
-      } else if (data.type == "share") {
+      if (data.type == 'copy') {
+        this.share(data.item)
+      } else if (data.type == 'share') {
         this.doLoginStatus().then((res) => {
           if (res) {
             this.dialogs.data = {
@@ -722,151 +738,151 @@ export default {
               sourceTitle: data.item.sourcePostId
                 ? data.item.sourcePost.title
                 : data.item.title,
-            };
-            this.dialogs.dialogVisible = true;
+            }
+            this.dialogs.dialogVisible = true
           }
-        });
+        })
       } else {
         let picurl =
-          "https://oss.meibbc.com/gw/img/3380CC9482F74FA89C118FB99F4CE5E7.jpg";
+          'https://oss.meibbc.com/gw/img/3380CC9482F74FA89C118FB99F4CE5E7.jpg'
         let url =
-          "https://chao.fun/p/" + (data.item.sourcePostId || data.item.postId);
+          'https://chao.fun/p/' + (data.item.sourcePostId || data.item.postId)
         var sharesinastring =
-          "http://v.t.sina.com.cn/share/share.php?title=" +
+          'http://v.t.sina.com.cn/share/share.php?title=' +
           data.item.title +
-          "&url=" +
+          '&url=' +
           url +
-          "（分享来自@炒饭社区）" +
-          "&content=utf-8&sourceUrl=" +
+          '（分享来自@炒饭社区）' +
+          '&content=utf-8&sourceUrl=' +
           url +
-          "&ralateUid=炒饭社区";
+          '&ralateUid=炒饭社区'
         // window.open(sharesinastring, 'newwindow', 'height=400,width=400,top=100,left=100');
-        window.open(sharesinastring, "_blank");
+        window.open(sharesinastring, '_blank')
       }
     },
     deletePost(index) {
-      this.lists.splice(index, 1);
+      this.lists.splice(index, 1)
     },
     savePost(item) {
       api.savePost({ postId: item.postId }).then((res) => {
         if (res.success) {
           if (item.save) {
-            this.$toast("已取消收藏");
+            this.$toast('已取消收藏')
           } else {
-            this.$toast("收藏成功");
+            this.$toast('收藏成功')
           }
-          item.save = !item.save;
+          item.save = !item.save
           //  this.$message.success("收藏成功")
-        } else if (res.errorCode == "need_login") {
+        } else if (res.errorCode == 'need_login') {
           this.$login({
             callBack: () => {
-              this.$store.dispatch("user/getInfo");
+              this.$store.dispatch('user/getInfo')
             },
-          });
+          })
         }
-      });
+      })
     },
     onCopy(e) {
-      this.$message.success("内容已复制到剪切板！");
+      this.$message.success('内容已复制到剪切板！')
     },
     share(item) {
-      this.message = location.origin + "/p/" + item.postId;
+      this.message = location.origin + '/p/' + item.postId
     },
     toDetail(item) {
       this.lists.forEach((i) => {
-        i.play = false;
-      });
-      
+        i.play = false
+      })
+
       if (this.canTo) {
         if (this.whichOne) {
-          localStorage.setItem("whichOne", this.whichOne);
+          localStorage.setItem('whichOne', this.whichOne)
         }
-        this.canTo = false;
+        this.canTo = false
         let obj = {
           // list: this.lists,
-        };
-        let top = this.$(".infinite-list").scrollTop();
-        console.log("top", top);
-        this.$(".infinite-list").animate({ scrollTop: top || "+=0" }, 1000);
-        obj.top = top;
-        obj.forumId = item.forumId;
+        }
+        let top = this.$('.infinite-list').scrollTop()
+        console.log('top', top)
+        this.$('.infinite-list').animate({ scrollTop: top || '+=0' }, 1000)
+        obj.top = top
+        obj.forumId = item.forumId
         obj.from = {
           params: this.$route.params,
           query: this.$route.query,
           path: this.$route.path,
-        };
-        obj.pagenum = this.pagenum;
-        obj.marker = this.marker;
-        obj.key = this.keys;
-        this.postBehavior(item.postId, "detail");
-        localStorage.setItem("spage", this.$route.path);
-        localStorage.setItem("storedata", JSON.stringify(obj));
+        }
+        obj.pagenum = this.pagenum
+        obj.marker = this.marker
+        obj.key = this.keys
+        this.postBehavior(item.postId, 'detail')
+        localStorage.setItem('spage', this.$route.path)
+        localStorage.setItem('storedata', JSON.stringify(obj))
 
-        this.$EventBus.$emit("refreshItemTag", {
-          way: 'saveTagId'
-        });
+        this.$EventBus.$emit('refreshItemTag', {
+          way: 'saveTagId',
+        })
         this.$router.push({
-          name: "articleDetail",
+          name: 'articleDetail',
           params: { postId: item.postId },
-        });
+        })
         setTimeout(() => {
-          this.canTo = true;
-        }, 1000);
+          this.canTo = true
+        }, 1000)
       }
     },
     toUrls(item, params) {
-      this.postBehavior(item.postId, "jump");
-      this.toUrl(params);
+      this.postBehavior(item.postId, 'jump')
+      this.toUrl(params)
     },
     postBehavior(postId, action) {
-      api.postBehavior({ postId, action }).then((res) => {});
+      api.postBehavior({ postId, action }).then((res) => {})
     },
     toTop() {
-      this.$(".infinite-list").animate({ scrollTop: 0 }, 200);
+      this.$('.infinite-list').animate({ scrollTop: 0 }, 200)
     },
     doZan(v, item, index) {
       if (v == 1) {
         //赞
         if (item.vote != 1) {
           if (item.vote == -1) {
-            item.ups += 2;
+            item.ups += 2
           } else {
-            item.ups += 1;
+            item.ups += 1
           }
-          item.vote = 1;
-          this.lists.splice(index, 1, item);
-          api.upvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = 1
+          this.lists.splice(index, 1, item)
+          api.upvote_post({ postId: item.postId }).then((res) => {})
         } else if (item.vote === 1) {
-          item.vote = 0;
-          item.ups -= 1;
-          this.lists.splice(index, 1, item);
-          api.upvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = 0
+          item.ups -= 1
+          this.lists.splice(index, 1, item)
+          api.upvote_post({ postId: item.postId }).then((res) => {})
         }
       } else {
         //踩
         if (item.vote != -1) {
           if (item.vote == 1) {
-            item.ups -= 2;
+            item.ups -= 2
           } else {
-            item.ups -= 1;
+            item.ups -= 1
           }
-          item.vote = -1;
-          this.lists.splice(index, 1, item);
-          api.downvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = -1
+          this.lists.splice(index, 1, item)
+          api.downvote_post({ postId: item.postId }).then((res) => {})
         } else if (item.vote === -1) {
-          item.vote = 0;
-          item.ups += 1;
-          this.lists.splice(index, 1, item);
-          api.downvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = 0
+          item.ups += 1
+          this.lists.splice(index, 1, item)
+          api.downvote_post({ postId: item.postId }).then((res) => {})
         }
       }
     },
   },
-};
+}
 </script>
 
-<style type='text/scss' lang='scss' scoped>
-@import "./css/list.scss";
+<style lang="scss" scoped type="text/scss">
+@import './css/list.scss';
 .scroll_to_top_phone {
   position: fixed;
   width: 40px;

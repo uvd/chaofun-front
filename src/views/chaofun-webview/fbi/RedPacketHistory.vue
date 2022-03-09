@@ -1,12 +1,10 @@
-<template>
-  
-</template>
+<template></template>
 
 <script>
 import * as api from '@/api/api'
-import {getUserInfo} from "../../../api/api";
+import { getUserInfo } from '../../../api/api'
 export default {
-  name: "RedPacket",
+  name: 'RedPacket',
   data() {
     return {
       input: '',
@@ -16,66 +14,71 @@ export default {
     }
   },
   created() {
-    this.password= this.$route.query.password;
+    this.password = this.$route.query.password
     if (this.password) {
       this.getRedPacket()
     }
   },
-  mounted() {
-
-  },
+  mounted() {},
 
   methods: {
     getRedPacket() {
-      api.getByPath('/api/v0/red_packet/get', {'password': this.password, 'type': 'password'}).then( (res) => {
-        if (res.success && res.data !== null) {
-          this.redPacket = res.data;
-          if (this.redPacket.isOpened || this.redPacket.isEnd) {
-            this.showDetail = true;
-          }
-        } else {
-          this.redPacket = null
-          if (res.errorMessage) {
-            this.$toast(res.errorMessage);
+      api
+        .getByPath('/api/v0/red_packet/get', {
+          password: this.password,
+          type: 'password',
+        })
+        .then((res) => {
+          if (res.success && res.data !== null) {
+            this.redPacket = res.data
+            if (this.redPacket.isOpened || this.redPacket.isEnd) {
+              this.showDetail = true
+            }
           } else {
-            this.$toast('没有这个红包');
+            this.redPacket = null
+            if (res.errorMessage) {
+              this.$toast(res.errorMessage)
+            } else {
+              this.$toast('没有这个红包')
+            }
           }
-        }
-      });
+        })
     },
 
     openRedPacket() {
-      api.getByPath('/api/v0/red_packet/open', {'password': this.password, 'type': 'password'}).then( (res) => {
-        if (res.success && res.data != null) {
-          this.redPacket = res.data;
-          if (this.redPacket.isOpened || this.redPacket.isEnd) {
-            this.showDetail = true;
-          }
-        } else {
-          this.redPacket = null
-          if (res.errorMessage) {
-            this.$toast(res.errorMessage);
+      api
+        .getByPath('/api/v0/red_packet/open', {
+          password: this.password,
+          type: 'password',
+        })
+        .then((res) => {
+          if (res.success && res.data != null) {
+            this.redPacket = res.data
+            if (this.redPacket.isOpened || this.redPacket.isEnd) {
+              this.showDetail = true
+            }
           } else {
-            this.$toast('没有这个红包');
+            this.redPacket = null
+            if (res.errorMessage) {
+              this.$toast(res.errorMessage)
+            } else {
+              this.$toast('没有这个红包')
+            }
           }
-        }
-      }).bind(this);
+        })
+        .bind(this)
     },
 
     inputEnter() {
-      this.password = this.input;
-      this.getRedPacket();
+      this.password = this.input
+      this.getRedPacket()
     },
 
     history() {
-      window.open('https://chao.fun/webview/fbi/history',"_blank");
-    }
-  }
+      window.open('https://chao.fun/webview/fbi/history', '_blank')
+    },
+  },
 }
-
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

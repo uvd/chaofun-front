@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import Element from 'element-ui';
+import Element from 'element-plus'
 
 import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
@@ -11,13 +11,11 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-
-
-Vue.prototype.$EventBus = new Vue();
+Vue.prototype.$EventBus = new Vue()
 
 if (process.env.NODE_ENV === 'development') {
-  const VConsole = require('vconsole');
-  new VConsole();
+  const VConsole = require('vconsole')
+  new VConsole()
 }
 
 // 图片开启懒加载
@@ -42,7 +40,7 @@ Viewer.setDefaults({
   // "transition": true, //使用 CSS3 过度
   // "fullscreen": false, //播放时是否全屏
   // "keyboard": true, //是否支持键盘
-  "url": "data-source",
+  url: 'data-source',
 })
 
 import VueScroller from 'vue-scroller'
@@ -55,35 +53,32 @@ import * as filters from './filters' // global filters
 import i18n from './lang'
 // const {version} = require('./utils/version')
 
-
 // Vue.prototype.$close = close
 
-import mixins from './mixins/mixins';
-Vue.mixin(mixins);
+import mixins from './mixins/mixins'
+Vue.mixin(mixins)
 
 import jquery from 'jquery'
 Vue.prototype.$ = jquery
 
-import {
-  Toast,Dialog,Cell,NumberKeyboard,Field,Popup
-} from 'vant';
-import 'vant/lib/index.css';
-Vue.use(Toast).use(Dialog).use(Cell).use(NumberKeyboard).use(Field).use(Popup);
+import { Toast, Dialog, Cell, NumberKeyboard, Field, Popup } from 'vant'
+import 'vant/lib/index.css'
+Vue.use(Toast).use(Dialog).use(Cell).use(NumberKeyboard).use(Field).use(Popup)
 
 if (process.env.NODE_ENV === 'production') {
 }
 
 // Moment.js 设置默认中文
-import moment from 'moment';
-moment.locale('zh-cn');
+import moment from 'moment'
+moment.locale('zh-cn')
 
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
-  i18n: (key, value) => i18n.t(key, value)
-});
+  i18n: (key, value) => i18n.t(key, value),
+})
 
 // register global utility filters
-Object.keys(filters).forEach(key => {
+Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key])
 })
 
@@ -94,16 +89,15 @@ Vue.config.productionTip = false
 
 // 加入百度统计
 router.beforeEach((to, from, next) => {
-  
   if (to.path) {
     if (window._hmt) {
       window._hmt.push(['_trackPageview', to.fullPath])
     }
   }
   console.log('路由切换')
-  if(to.path!='/lists'){
+  if (to.path != '/lists') {
     // console.log('aaa')
-    store.state.settings.leftNav = 'normal';
+    store.state.settings.leftNav = 'normal'
     // console.log('aaa',store.state.settings.leftNav)
   }
   // if(to.meta.keepAlive&&!from.path.includes('/p/')){
@@ -118,5 +112,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App),
 })

@@ -45,7 +45,7 @@ const state = {
   tagsView: tagsView,
   fixedHeader: fixedHeader,
   sidebarLogo: sidebarLogo,
-  leftNav: 'normal'
+  leftNav: 'normal',
 }
 
 const mutations = {
@@ -54,9 +54,9 @@ const mutations = {
       state[key] = value
     }
   },
-  SET_leftNav: (state,data) => {
+  SET_leftNav: (state, data) => {
     state.leftNav = data
-  }
+  },
 }
 
 const actions = {
@@ -72,6 +72,5 @@ export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }
-

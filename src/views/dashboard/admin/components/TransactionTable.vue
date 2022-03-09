@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="list" style="width: 100%;padding-top: 15px;">
+  <el-table :data="list" style="width: 100%; padding-top: 15px">
     <el-table-column label="Order_No" min-width="200">
       <template slot-scope="scope">
         {{ scope.row.order_no | orderNoFilter }}
@@ -11,7 +11,7 @@
       </template>
     </el-table-column>
     <el-table-column label="Status" width="100" align="center">
-      <template slot-scope="{row}">
+      <template slot-scope="{ row }">
         <el-tag :type="row.status | statusFilter">
           {{ row.status }}
         </el-tag>
@@ -28,17 +28,17 @@ export default {
     statusFilter(status) {
       const statusMap = {
         success: 'success',
-        pending: 'danger'
+        pending: 'danger',
       }
       return statusMap[status]
     },
     orderNoFilter(str) {
       return str.substring(0, 30)
-    }
+    },
   },
   data() {
     return {
-      list: null
+      list: null,
     }
   },
   created() {
@@ -51,7 +51,7 @@ export default {
       //   console.log(response)
       //   this.list = response.data.items.slice(0, 8)
       // })
-    }
-  }
+    },
+  },
 }
 </script>

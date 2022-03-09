@@ -9,7 +9,7 @@
         playsinline="true"
         :controls="file.status !== 'uploading'"
       >
-        <source :src="file.url">
+        <source :src="file.url" />
       </video>
       <el-progress
         v-if="file.status === 'uploading'"
@@ -17,16 +17,24 @@
         color="#FFF"
         :show-text="false"
         :stroke-width="4"
-        :percentage="parsePercentage(file.percentage)">
+        :percentage="parsePercentage(file.percentage)"
+      >
       </el-progress>
     </div>
     <div class="uploader-video-control">
-      <el-button icon="el-icon-delete" @click="remove"></el-button>
+      <el-button :icon="ElIconDelete" @click="remove"></el-button>
     </div>
   </div>
 </template>
+
 <script>
+import { Delete as ElIconDelete } from '@element-plus/icons'
 export default {
+  data() {
+    return {
+      ElIconDelete,
+    }
+  },
   model: {
     prop: 'file',
   },
@@ -34,7 +42,7 @@ export default {
     file: Object,
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     handleRemove: Function,
     handleClick: Function,
@@ -42,23 +50,25 @@ export default {
     listType: String,
     isVideo: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   methods: {
     parsePercentage(val) {
-      return parseInt(val, 10);
+      return parseInt(val, 10)
     },
     remove() {
       this.$confirm('此操作将删除当前上传视频, 是否继续?', '删除视频？', {
         confirmButtonText: '删除',
         cancelButtonText: '保留',
-        type: 'warning'
-      }).then(() => {
-        this.handleRemove();
-      }).catch(() => {});
-    }
-  }
+        type: 'warning',
+      })
+        .then(() => {
+          this.handleRemove()
+        })
+        .catch(() => {})
+    },
+  },
 }
 </script>
 
@@ -74,7 +84,7 @@ export default {
   overflow: hidden;
   &:after {
     display: block;
-    content: "";
+    content: '';
     padding-top: 56.25%;
     pointer-events: none;
   }

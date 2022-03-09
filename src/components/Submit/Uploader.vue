@@ -2,7 +2,7 @@
   <div
     class="el-upload-dragger"
     :class="{
-      'is-dragover': dragover && !moving
+      'is-dragover': dragover && !moving,
     }"
     @drop.prevent="onDrop"
     @dragover.prevent="onDragover"
@@ -31,20 +31,26 @@
     >
     </UploadList>
     <div class="image-uploader-free" @click="handleClick" v-else>
-      <p>
-        将文件拖到此处，或 <el-button round>点击上传</el-button>
-      </p>
+      <p>将文件拖到此处，或 <el-button round>点击上传</el-button></p>
       <p class="tip">试试直接粘贴图片，更快上传！</p>
     </div>
-    <input class="el-upload__input" type="file" ref="inputUploader" :name="name" @change="handleChange" :multiple="multiple" :accept="accept" />
+    <input
+      class="el-upload__input"
+      type="file"
+      ref="inputUploader"
+      :name="name"
+      @change="handleChange"
+      :multiple="multiple"
+      :accept="accept"
+    />
   </div>
 </template>
 
 <script>
-import ajax from 'element-ui/packages/upload/src/ajax';
-import UploadList from './UploadList';
-import UploadVideo from './UploadVideo';
-import exif from '@/utils/exif-check';
+import ajax from 'element-ui/packages/upload/src/ajax'
+import UploadList from './UploadList'
+import UploadVideo from './UploadVideo'
+import exif from '@/utils/exif-check'
 
 function noop() {}
 
@@ -59,22 +65,22 @@ export default {
   mounted() {
     // 拖拽更改Hover样式
     document.addEventListener('dragover', () => {
-      this.isDrag = true;
-    });
+      this.isDrag = true
+    })
     document.addEventListener('dragleave', () => {
-      this.isDrag = false;
-    });
+      this.isDrag = false
+    })
   },
   props: {
     action: {
       type: String,
-      required: true
+      required: true,
     },
     headers: {
       type: Object,
       default() {
-        return {};
-      }
+        return {}
+      },
     },
     data: Object,
     multiple: {
@@ -83,62 +89,62 @@ export default {
     },
     name: {
       type: String,
-      default: 'file'
+      default: 'file',
     },
     drag: Boolean,
     dragger: Boolean,
     withCredentials: Boolean,
     showFileList: {
       type: Boolean,
-      default: true
+      default: true,
     },
     accept: String,
     type: {
       type: String,
-      default: 'select'
+      default: 'select',
     },
     beforeUpload: Function,
     beforeRemove: Function,
     onRemove: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onChange: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onPreview: {
-      type: Function
+      type: Function,
     },
     onSuccess: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onProgress: {
       type: Function,
-      default: noop
+      default: noop,
     },
     onError: {
       type: Function,
-      default: noop
+      default: noop,
     },
     autoUpload: {
       type: Boolean,
-      default: true
+      default: true,
     },
     listType: {
       type: String,
-      default: 'picture'
+      default: 'picture',
     },
     httpRequest: {
       type: Function,
-      default: ajax
+      default: ajax,
     },
     disabled: Boolean,
     limit: Number,
     onExceed: {
       type: Function,
-      default: noop
+      default: noop,
     },
     // 是否支持粘贴上传
     pasteUpload: {
@@ -157,15 +163,15 @@ export default {
       isVideo: false, // 是否视频模式
       tempIndex: 1,
       reqs: {},
-    };
+    }
   },
   mounted() {
     // 监听粘贴上传
-    document.addEventListener('paste', this.toPaste);
+    document.addEventListener('paste', this.toPaste)
   },
   beforeDestroy() {
     // 移除监听上传
-    document.removeEventListener('paste', this.toPaste);    
+    document.removeEventListener('paste', this.toPaste)
   },
   watch: {
     // fileList: {
@@ -183,108 +189,127 @@ export default {
     // === Drag ===
     onDragover() {
       if (!this.disabled) {
-        this.dragover = true;
+        this.dragover = true
       }
     },
     onDrop(e) {
-      this.dragover = false;
+      this.dragover = false
       if (!this.accept) {
-        this.uploadFiles(e.dataTransfer.files);
-        return;
+        this.uploadFiles(e.dataTransfer.files)
+        return
       }
     },
     onMove(movingStatus) {
       if (!this.disabled) {
-        this.moving = movingStatus;
+        this.moving = movingStatus
       }
       // 同步数据
-      this.fileList = this.files.map(file => file.response.data);
-      this.$emit('input', this.fileList);
+      this.fileList = this.files.map((file) => file.response.data)
+      this.$emit('input', this.fileList)
     },
 
     // === Upload ===
     handleChange(ev) {
-      const files = ev.target.files;
-      if (!files) return;
-      this.uploadFiles(files);
+      const files = ev.target.files
+      if (!files) return
+      this.uploadFiles(files)
     },
     async uploadFiles(files) {
       if (this.limit && this.fileList.length + files.length > this.limit) {
-        this.onExceed && this.onExceed(files, this.fileList);
-        return;
+        this.onExceed && this.onExceed(files, this.fileList)
+        return
       }
-      let postFiles = Array.prototype.slice.call(files);
-      if (!this.multiple) { postFiles = postFiles.slice(0, 1); }
-      if (postFiles.length === 0) { return; }
+      let postFiles = Array.prototype.slice.call(files)
+      if (!this.multiple) {
+        postFiles = postFiles.slice(0, 1)
+      }
+      if (postFiles.length === 0) {
+        return
+      }
 
       // 检测图片
       for (let index = 0; index < postFiles.length; index++) {
-        let rawFile = postFiles[index];
+        let rawFile = postFiles[index]
         // 如果视频只上传第一个
-        if (['video/mp4', 'video/quicktime', 'video/x-quicktime', 'image/mov', 'video/avi', 'application/mp4'].includes(rawFile.type)) {
+        if (
+          [
+            'video/mp4',
+            'video/quicktime',
+            'video/x-quicktime',
+            'image/mov',
+            'video/avi',
+            'application/mp4',
+          ].includes(rawFile.type)
+        ) {
           if (this.files.length > 0) {
-            this.$message.error('图片和视频不能同时上传，并且只支持上传1个视频！', {
-              duration: 5000,
-            });
-            return;
+            this.$message.error(
+              '图片和视频不能同时上传，并且只支持上传1个视频！',
+              {
+                duration: 5000,
+              }
+            )
+            return
           }
           // 视频上传模式
-          this.isVideo = true;
-          this.handleStart(rawFile);
-          if (this.autoUpload) this.upload(rawFile);
-          break;
+          this.isVideo = true
+          this.handleStart(rawFile)
+          if (this.autoUpload) this.upload(rawFile)
+          break
         }
 
         // TODO: 前端暂时只做jpg检测，其他格式（TIFF, HEIC）后端默认会转成jpg
         if (['image/jpeg'].includes(rawFile.type)) {
-          const data = await exif(rawFile, this.$createElement);
+          const data = await exif(rawFile, this.$createElement)
           if (data === false) {
-            return;
+            return
           }
           if (data !== true) {
-            rawFile = data;
+            rawFile = data
           }
         }
-       
-        this.handleStart(rawFile);
-        if (this.autoUpload) this.upload(rawFile);
+
+        this.handleStart(rawFile)
+        if (this.autoUpload) this.upload(rawFile)
       }
     },
     upload(rawFile) {
-      this.$refs.inputUploader.value = null;
+      this.$refs.inputUploader.value = null
       if (!this.beforeUpload) {
-        return this.post(rawFile);
+        return this.post(rawFile)
       }
-      const before = this.beforeUpload(rawFile);
+      const before = this.beforeUpload(rawFile)
       if (before && before.then) {
-        before.then(processedFile => {
-          const fileType = Object.prototype.toString.call(processedFile);
-          if (fileType === '[object File]' || fileType === '[object Blob]') {
-            if (fileType === '[object Blob]') {
-              processedFile = new File([processedFile], rawFile.name, {
-                type: rawFile.type
-              });
-            }
-            for (const p in rawFile) {
-              if (rawFile.hasOwnProperty(p)) {
-                processedFile[p] = rawFile[p];
+        before.then(
+          (processedFile) => {
+            const fileType = Object.prototype.toString.call(processedFile)
+            if (fileType === '[object File]' || fileType === '[object Blob]') {
+              if (fileType === '[object Blob]') {
+                processedFile = new File([processedFile], rawFile.name, {
+                  type: rawFile.type,
+                })
               }
+              for (const p in rawFile) {
+                if (rawFile.hasOwnProperty(p)) {
+                  processedFile[p] = rawFile[p]
+                }
+              }
+              this.post(processedFile)
+            } else {
+              this.post(rawFile)
             }
-            this.post(processedFile);
-          } else {
-            this.post(rawFile);
+          },
+          () => {
+            this.onRemove(null, rawFile)
           }
-        }, () => {
-          this.onRemove(null, rawFile);
-        });
+        )
       } else if (before !== false) {
-        this.post(rawFile);
+        this.post(rawFile)
       } else {
-        this.onRemove(null, rawFile);
+        this.onRemove(null, rawFile)
       }
     },
     post(rawFile) {
-      const { uid, name } = rawFile;
+      const { uid, name } = rawFile
       const options = {
         headers: this.headers,
         withCredentials: this.withCredentials,
@@ -295,187 +320,190 @@ export default {
         },
         filename: this.name,
         action: this.action,
-        onProgress: e => {
-          this.handleProgress(e, rawFile);
+        onProgress: (e) => {
+          this.handleProgress(e, rawFile)
         },
-        onSuccess: res => {
-          this.handleSuccess(res, rawFile);
-          delete this.reqs[uid];
+        onSuccess: (res) => {
+          this.handleSuccess(res, rawFile)
+          delete this.reqs[uid]
         },
-        onError: err => {
-          this.handleError(err, rawFile);
-          delete this.reqs[uid];
-        }
-      };
-      const req = this.httpRequest(options);
-      this.reqs[uid] = req;
+        onError: (err) => {
+          this.handleError(err, rawFile)
+          delete this.reqs[uid]
+        },
+      }
+      const req = this.httpRequest(options)
+      this.reqs[uid] = req
       if (req && req.then) {
-        req.then(options.onSuccess, options.onError);
+        req.then(options.onSuccess, options.onError)
       }
     },
 
     // === Main ===
     handleStart(rawFile) {
-      rawFile.uid = Date.now() + this.tempIndex++;
+      rawFile.uid = Date.now() + this.tempIndex++
       let file = {
         status: 'ready',
         name: rawFile.name,
         size: rawFile.size,
         percentage: 0,
         uid: rawFile.uid,
-        raw: rawFile
-      };
+        raw: rawFile,
+      }
       if (this.listType === 'picture-card' || this.listType === 'picture') {
         try {
-          file.url = URL.createObjectURL(rawFile);
+          file.url = URL.createObjectURL(rawFile)
         } catch (err) {
-          console.error('[Element Error][Upload]', err);
-          return;
+          console.error('[Element Error][Upload]', err)
+          return
         }
       }
-      this.files.push(file);
-      this.onChange(file, this.files);
+      this.files.push(file)
+      this.onChange(file, this.files)
     },
     handleProgress(ev, rawFile) {
-      const file = this.getFile(rawFile);
-      this.onProgress(ev, file, this.files);
-      file.status = 'uploading';
-      file.percentage = ev.percent || 0;
+      const file = this.getFile(rawFile)
+      this.onProgress(ev, file, this.files)
+      file.status = 'uploading'
+      file.percentage = ev.percent || 0
     },
     handleSuccess(res, rawFile) {
-      const file = this.getFile(rawFile);
+      const file = this.getFile(rawFile)
       try {
         if (file && res && res.success) {
-          file.status = 'success';
-          file.response = res;
+          file.status = 'success'
+          file.response = res
           // 转换格式图片后缀不一致更换图片地址
-          if (rawFile.name.split('.').pop().toLowerCase() !== res.data.split('.').pop().toLowerCase()) {
+          if (
+            rawFile.name.split('.').pop().toLowerCase() !==
+            res.data.split('.').pop().toLowerCase()
+          ) {
             file.url = `${this.imgOrigin}${res.data}`
           }
-          this.fileList.push(res.data);
-          this.$emit('input',  this.fileList);
-          this.onSuccess(res, file, this.files);
-          this.onChange(file, this.files);
-          return;
+          this.fileList.push(res.data)
+          this.$emit('input', this.fileList)
+          this.onSuccess(res, file, this.files)
+          this.onChange(file, this.files)
+          return
         }
       } catch (error) {
         // 内部错误
-        console.log(error);
+        console.log(error)
       }
-      
-      this.handleError(res.errorMessage || '上传错误，请重试！', rawFile);
+
+      this.handleError(res.errorMessage || '上传错误，请重试！', rawFile)
     },
     handleError(err, rawFile) {
-      const file = this.getFile(rawFile);
-      const fileList = this.files;
-      file.status = 'fail';
-      fileList.splice(fileList.indexOf(file), 1);
-      this.$message.error(err);
-      this.onError(err, file, this.files);
-      this.onChange(file, this.files);
+      const file = this.getFile(rawFile)
+      const fileList = this.files
+      file.status = 'fail'
+      fileList.splice(fileList.indexOf(file), 1)
+      this.$message.error(err)
+      this.onError(err, file, this.files)
+      this.onChange(file, this.files)
       // 视频处理
       if (this.isVideo) {
         // 视频处理
-        this.isVideo = false;
+        this.isVideo = false
       }
     },
     handleRemove(file, raw) {
       if (raw) {
-        file = this.getFile(raw);
+        file = this.getFile(raw)
       }
       let doRemove = () => {
-        this.abort(file);
-        let fileList = this.files;
-        fileList.splice(fileList.indexOf(file), 1);
+        this.abort(file)
+        let fileList = this.files
+        fileList.splice(fileList.indexOf(file), 1)
 
         // 删除照片
-        this.fileList.splice(this.fileList.indexOf(file.response.data), 1);
-        this.$emit('input',  this.fileList);
-        this.onRemove(file, fileList);
+        this.fileList.splice(this.fileList.indexOf(file.response.data), 1)
+        this.$emit('input', this.fileList)
+        this.onRemove(file, fileList)
         if (this.isVideo) {
           // 视频处理
-          this.isVideo = false;
+          this.isVideo = false
         }
-      };
+      }
       if (!this.beforeRemove) {
-        doRemove();
+        doRemove()
       } else if (typeof this.beforeRemove === 'function') {
-        const before = this.beforeRemove(file, this.files);
+        const before = this.beforeRemove(file, this.files)
         if (before && before.then) {
           before.then(() => {
-            doRemove();
-          }, noop);
+            doRemove()
+          }, noop)
         } else if (before !== false) {
-          doRemove();
+          doRemove()
         }
       }
     },
     handleClick() {
       if (!this.disabled) {
-        this.$refs.inputUploader.value = null;
-        this.$refs.inputUploader.click();
+        this.$refs.inputUploader.value = null
+        this.$refs.inputUploader.click()
       }
     },
     handleKeydown(e) {
-      if (e.target !== e.currentTarget) return;
+      if (e.target !== e.currentTarget) return
       if (e.keyCode === 13 || e.keyCode === 32) {
-        this.handleClick();
+        this.handleClick()
       }
     },
     getFile(rawFile) {
-      let fileList = this.files;
-      let target;
-      fileList.every(item => {
-        target = rawFile.uid === item.uid ? item : null;
-        return !target;
-      });
-      return target;
+      let fileList = this.files
+      let target
+      fileList.every((item) => {
+        target = rawFile.uid === item.uid ? item : null
+        return !target
+      })
+      return target
     },
     abort(file) {
-      const { reqs } = this;
+      const { reqs } = this
       if (file) {
-        let uid = file;
-        if (file.uid) uid = file.uid;
+        let uid = file
+        if (file.uid) uid = file.uid
         if (reqs[uid]) {
-          reqs[uid].abort();
+          reqs[uid].abort()
         }
       } else {
         Object.keys(reqs).forEach((uid) => {
-          if (reqs[uid]) reqs[uid].abort();
-          delete reqs[uid];
-        });
+          if (reqs[uid]) reqs[uid].abort()
+          delete reqs[uid]
+        })
       }
     },
     clearFiles() {
-      this.uploadFiles = [];
+      this.uploadFiles = []
     },
     // 粘贴上传
     toPaste(event) {
-      const { pasteUpload } = this;
+      const { pasteUpload } = this
       // 是否允许上传
       if (!pasteUpload) {
-        return;
+        return
       }
 
       // 获取剪贴板文件
-      const items = (event.clipboardData && event.clipboardData.items) || [];
+      const items = (event.clipboardData && event.clipboardData.items) || []
       if (!items || !items.length) {
-        return;
+        return
       }
-      let file = null;
+      let file = null
       for (let i = 0; i < items.length; i++) {
         if (items[i].type.indexOf('image') !== -1) {
-          file = items[i].getAsFile();
-          break;
+          file = items[i].getAsFile()
+          break
         }
       }
       // 没有图片那么不上传
       if (!file) {
-        return;
+        return
       }
-      
-      this.uploadFiles([ file ]);
-    }
+
+      this.uploadFiles([file])
+    },
   },
 }
 </script>

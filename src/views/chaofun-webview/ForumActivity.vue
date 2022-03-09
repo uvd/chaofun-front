@@ -1,13 +1,9 @@
-<template>
-  
-</template>
+<template></template>
 
 <script>
-  export default {
-    name: "ForumActivity"
-  }
+export default {
+  name: 'ForumActivity',
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,51 +2,61 @@
   <div class="wscn-http404-container">
     <div v-if="!ISPHONE" class="wscn-http404">
       <div class="pic-404">
-        <img class="pic-404__parent" src="https://i.chao.fun/biz/c9c9610d4dd1488f1b229769b3cc3b70.gif" alt="404">
+        <img
+          class="pic-404__parent"
+          src="https://i.chao.fun/biz/c9c9610d4dd1488f1b229769b3cc3b70.gif"
+          alt="404"
+        />
         <!-- <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
-        <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
-        <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404"> -->
+          <img class="pic-404__child left" src="@/assets/404_images/404_cloud.png" alt="404">
+          <img class="pic-404__child mid" src="@/assets/404_images/404_cloud.png" alt="404">
+          <img class="pic-404__child right" src="@/assets/404_images/404_cloud.png" alt="404"> -->
       </div>
-        <div class="bullshit">
-          <div class="bullshit__oops">页面已飞离地球!</div>
-          
-          <div class="bullshit__headline"> 尊敬的炒饭用户： </div>
-          <div class="bullshit__info">十分抱歉，你打开的页面不存在或者内容已删除</div>
+      <div class="bullshit">
+        <div class="bullshit__oops">页面已飞离地球!</div>
+
+        <div class="bullshit__headline">尊敬的炒饭用户：</div>
+        <div class="bullshit__info">
+          十分抱歉，你打开的页面不存在或者内容已删除
         </div>
-        <a href="/" class="bullshit__return-home">返回炒饭首页</a>
       </div>
+      <a href="/" class="bullshit__return-home">返回炒饭首页</a>
+    </div>
     <div v-if="ISPHONE" class="wscn-http">
       <div class="pic-404">
-        <img class="pic-404__parent" src="https://i.chao.fun/biz/c9c9610d4dd1488f1b229769b3cc3b70.gif" alt="404">
+        <img
+          class="pic-404__parent"
+          src="https://i.chao.fun/biz/c9c9610d4dd1488f1b229769b3cc3b70.gif"
+          alt="404"
+        />
       </div>
-        <div class="bullshit">
-          <div class="bullshit__oops">页面已飞离地球!</div>
-          
-          <div class="bullshit__headline"> 尊敬的炒饭用户： </div>
-          <div class="bullshit__info">十分抱歉，你打开的页面不存在或者内容已删除</div>
+      <div class="bullshit">
+        <div class="bullshit__oops">页面已飞离地球!</div>
+
+        <div class="bullshit__headline">尊敬的炒饭用户：</div>
+        <div class="bullshit__info">
+          十分抱歉，你打开的页面不存在或者内容已删除
         </div>
-        <a href="/" class="bullshit__return-home">返回炒饭首页</a>
       </div>
-</div>
-  
+      <a href="/" class="bullshit__return-home">返回炒饭首页</a>
+    </div>
+  </div>
 </template>
 
 <script>
-
 export default {
   name: 'Page404',
   computed: {
     message() {
       return 'The webmaster said that you can not enter this page...'
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.wscn-http404-container{
-  transform: translate(-50%,-50%);
+.wscn-http404-container {
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 40%;
   left: 50%;
@@ -65,7 +75,6 @@ export default {
     border-radius: 20px;
     &__parent {
       width: 100%;
-      
     }
     &__child {
       position: absolute;
@@ -240,46 +249,46 @@ export default {
     }
   }
 }
-.wscn-http{
+.wscn-http {
   width: 100vw;
-  img{
+  img {
     width: 100%;
     border-radius: 140px;
     margin-bottom: 10px;
   }
-  .bullshit{
+  .bullshit {
     padding: 10px 40px;
   }
-  .bullshit__oops{
-      font-size: 16px;
-      font-weight: bold;
-      line-height: 30px;
-      color: #1482f0;
-      opacity: 0;
-      margin-bottom: 20px;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-fill-mode: forwards;
+  .bullshit__oops {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #1482f0;
+    opacity: 0;
+    margin-bottom: 20px;
+    animation-name: slideUp;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
   }
-  .bullshit__return-home{
+  .bullshit__return-home {
     display: block;
-      float: left;
-      width: 110px;
-      height: 36px;
-      background: #1482f0;
-      border-radius: 100px;
-      text-align: center;
-      color: #ffffff;
-      opacity: 0;
-      font-size: 14px;
-      line-height: 36px;
-      cursor: pointer;
-      animation-name: slideUp;
-      animation-duration: 0.5s;
-      animation-delay: 0.3s;
-      animation-fill-mode: forwards;
-      margin-left: 40px;
-      margin-top: 40px;
+    float: left;
+    width: 110px;
+    height: 36px;
+    background: #1482f0;
+    border-radius: 100px;
+    text-align: center;
+    color: #ffffff;
+    opacity: 0;
+    font-size: 14px;
+    line-height: 36px;
+    cursor: pointer;
+    animation-name: slideUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+    margin-left: 40px;
+    margin-top: 40px;
   }
 }
 </style>

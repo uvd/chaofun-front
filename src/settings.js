@@ -7,27 +7,27 @@ module.exports = {
       type: 'open',
       background: 'rgba(255,255,255)',
       // opacity: .8,
-      // backgroundImage: 'url("http://pic.vjshi.com/2018-12-15/cca8e23f5a35e6c83932224c00eb336c/00001.jpg?x-oss-process=style/watermark")', 
+      // backgroundImage: 'url("http://pic.vjshi.com/2018-12-15/cca8e23f5a35e6c83932224c00eb336c/00001.jpg?x-oss-process=style/watermark")',
       // backgroundImage: '-webkit-linear-gradient(top, rgba(255, 255, 255, 0.1) 0%, rgba(201, 12, 12, 0.1) 40%, rgba(196, 51, 51, 0.2) 98%, #FFFFFF 100%)',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       fontColor: {
-        color: '#fff !important'
-      }
+        color: '#fff !important',
+      },
     },
     sidebarStyle: {
       type: 'close',
       background: 'rgba(255,255,255,0.8)',
       // backgroundImage: '-webkit-linear-gradient(top, rgba(255, 255, 255, 0.1) 0%, rgba(201, 12, 12, 0.1) 40%, rgba(196, 51, 51, 0.2) 98%, #FFFFFF 100%)',
       // opacity: .6,
-      // backgroundImage: 'url("https://img.tukuppt.com//ad_preview/00/12/53/5dc3d33980758.jpg!/fw/980")', 
+      // backgroundImage: 'url("https://img.tukuppt.com//ad_preview/00/12/53/5dc3d33980758.jpg!/fw/980")',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       fontColor: {
-        color: '#fff !important'
-      }
+        color: '#fff !important',
+      },
     },
     contentStyle: {
       type: 'open',
@@ -38,20 +38,21 @@ module.exports = {
       // backgroundPosition: 'center',
       // backgroundSize: 'cover',
       fontColor: {
-        color: '#fff !important'
-      }
+        color: '#fff !important',
+      },
     },
     bodyStyle: {
       type: 'close',
-      backgroundImage: 'url("https://img.tukuppt.com//ad_preview/00/12/53/5dc3d33980758.jpg!/fw/980")', 
+      backgroundImage:
+        'url("https://img.tukuppt.com//ad_preview/00/12/53/5dc3d33980758.jpg!/fw/980")',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
-      backgroundSize: 'cover'
-    }
+      backgroundSize: 'cover',
+    },
   },
   theme: {
     backgroundColor: 'pink',
-    backgroundImage: 'url("")', 
+    backgroundImage: 'url("")',
     theme: '',
   },
 
@@ -85,5 +86,5 @@ module.exports = {
    * The default is only used in the production env
    * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  errorLog: 'production'
+  errorLog: 'production',
 }

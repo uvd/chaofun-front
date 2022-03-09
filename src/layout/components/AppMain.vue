@@ -1,10 +1,10 @@
 <template>
   <section class="app-main">
-        <!-- <div style="height:50px;background:transparent;"></div> -->
-<!--    <transition name="fade-transform" mode="out-in">-->
+    <!-- <div style="height:50px;background:transparent;"></div> -->
+    <!--    <transition name="fade-transform" mode="out-in">-->
     <!-- <keep-alive>
-        <router-view :key="key"/>
-    </keep-alive> -->
+          <router-view :key="key"/>
+      </keep-alive> -->
     <keep-alive>
       <router-view :key="key" v-if="$route.meta.keepAlive">
         <!-- 这里是会被缓存的视图组件 -->
@@ -14,10 +14,10 @@
     <router-view :key="key" v-if="!$route.meta.keepAlive">
       <!-- 这里是不被缓存的视图组件 -->
     </router-view>
-     <!-- <keep-alive>
-        <router-view :key="key" />
-     </keep-alive> -->
-<!--    </transition>-->
+    <!-- <keep-alive>
+          <router-view :key="key" />
+       </keep-alive> -->
+    <!--    </transition>-->
   </section>
 </template>
 
@@ -30,8 +30,8 @@ export default {
     },
     key() {
       return this.$route.path
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -44,17 +44,17 @@ export default {
   // overflow: hidden;
   padding: 0px;
   box-sizing: border-box;
-  background: #F0F2F5;
-  -webkit-font-smoothing: antialiased
+  background: #f0f2f5;
+  -webkit-font-smoothing: antialiased;
 }
 @media screen and (max-width: 700px) {
   .app-main {
-  /* 50= navbar  50  */
-    
+    /* 50= navbar  50  */
+
     padding: 0px;
   }
 }
-.fixed-header+.app-main {
+.fixed-header + .app-main {
   // padding-top: 50px;
 }
 
@@ -64,7 +64,7 @@ export default {
     min-height: calc(100vh);
   }
 
-  .fixed-header+.app-main {
+  .fixed-header + .app-main {
     // padding-top: 54px;
   }
 }

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-dialog title="版主申请" :visible.sync="dialogTableVisible" :append-to-body="true" :before-close="hide">
+    <el-dialog
+      title="版主申请"
+      :visible.sync="dialogTableVisible"
+      :append-to-body="true"
+      :before-close="hide"
+    >
       <el-form :model="form">
         <el-form-item label="申请理由:">
           <el-input v-model="form.applyModReason" autocomplete="off"></el-input>
@@ -15,52 +20,51 @@
 </template>
 
 <script>
-  import * as api from '../../api/api'
-  import {createArticle} from "../../api/article";
-  export default {
-    name: "ApplyMod",
-    data() {
-      return {
-        // dialogTableVisible: false,
-        form: {
-          applyModReason: '',
-        },
-        show: false
-      }
-    },
-    props: {
-      dialogTableVisible: {
-        type: Boolean,
-        default: false
+import * as api from '../../api/api'
+import { createArticle } from '../../api/article'
+export default {
+  name: 'ApplyMod',
+  data() {
+    return {
+      // dialogTableVisible: false,
+      form: {
+        applyModReason: '',
       },
-      forumId: {
-        type: String,
-        default: null
-      }
+      show: false,
+    }
+  },
+  props: {
+    dialogTableVisible: {
+      type: Boolean,
+      default: false,
     },
-
-    created() {
-      // this.show = this.dialogTableVisible
+    forumId: {
+      type: String,
+      default: null,
     },
+  },
 
-    methods: {
-      hide() {
-        this.$emit('hideFunc');
-      },
-      applyForum() {
-        api.applyMod({'forumId':this.forumId, 'reason': this.form.applyModReason}).then(res=>{
-          if(res.success){
-            this.$toast('申请提交成功，请等待审批通知');
+  created() {
+    // this.show = this.dialogTableVisible
+  },
+
+  methods: {
+    hide() {
+      this.$emit('hideFunc')
+    },
+    applyForum() {
+      api
+        .applyMod({ forumId: this.forumId, reason: this.form.applyModReason })
+        .then((res) => {
+          if (res.success) {
+            this.$toast('申请提交成功，请等待审批通知')
             this.$emit('hideFunc')
             // this.getForumInfo()
           }
         })
-      }
-    }
-  }
-
+    },
+  },
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

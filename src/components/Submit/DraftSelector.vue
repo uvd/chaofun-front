@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button type="text" @click="visible = true">草稿箱 <span>{{drafts.length}}</span></el-button>
+    <el-button type="text" @click="visible = true"
+      >草稿箱 <span>{{ drafts.length }}</span></el-button
+    >
     <el-dialog
       width="400"
       trigger="click"
@@ -8,27 +10,34 @@
       :visible.sync="visible"
     >
       <span slot="title">
-        草稿箱 <i>{{drafts.length}}/20</i>
+        草稿箱 <i>{{ drafts.length }}/20</i>
       </span>
       <ul>
         <li :key="item.i" v-for="item in drafts" @click="setContent(item)">
           <div class="draft-icon">
-            <i class="el-icon-tickets"></i>
+            <el-icon><el-icon-tickets /></el-icon>
           </div>
           <div class="draft-content">
-            <h2 v-if="draftId && draftId === item.i" class="editing">正在编辑：{{item.t}}</h2>
-            <h2 v-else>{{item.t}}</h2>
+            <h2 v-if="draftId && draftId === item.i" class="editing">
+              正在编辑：{{ item.t }}
+            </h2>
+            <h2 v-else>{{ item.t }}</h2>
             <div class="draft-desc">
-              <span v-if="item.n">{{item.n}}</span>
+              <span v-if="item.n">{{ item.n }}</span>
               <span class="seprate" v-if="item.n">·</span>
-              <time>{{moment.unix(item.d).fromNow()}}</time>
+              <time>{{ moment.unix(item.d).fromNow() }}</time>
             </div>
           </div>
           <div class="draft-operation">
-            <el-button icon="el-icon-delete" @click="() => {
-              removeDraft(item.i)
-              this.$toast('删除成功！')
-            }"></el-button>
+            <el-button
+              :icon="ElIconDelete"
+              @click="
+                () => {
+                  removeDraft(item.i)
+                  this.$toast('删除成功！')
+                }
+              "
+            ></el-button>
           </div>
         </li>
       </ul>
@@ -38,47 +47,65 @@
       </span>
     </el-dialog>
   </div>
-  
 </template>
+
 <script>
+import {
+  Tickets as ElIconTickets,
+  Delete as ElIconDelete,
+} from '@element-plus/icons'
 import 'moment/locale/zh-cn'
 import moment from 'moment'
 import { nanoid } from 'nanoid'
 
-export default ({
-  props: {
-    title: String,
-    value: String,
-    draftId: String,
-  },
+export default {
   data() {
     return {
       moment: moment,
       drafts: [],
       visible: false,
+      ElIconDelete,
     }
   },
+  components: {
+    ElIconTickets,
+  },
+  props: {
+    title: String,
+    value: String,
+    draftId: String,
+  },
   created() {
-    this.drafts = this.getDrafts();
-    console.log(this.drafts);
+    this.drafts = this.getDrafts()
+    console.log(this.drafts)
   },
   methods: {
     // 获取所有草稿
     getDrafts() {
       const userId = this.$store.state.user.userInfo.userId
       if (!userId) {
-        return [];
+        return []
       }
       const key = `draft:${userId}:article`
-      const articles = JSON.parse(localStorage.getItem(key) || '[]');
+      const articles = JSON.parse(localStorage.getItem(key) || '[]')
       if (articles && articles.length > 0) {
         // 检查
-        return articles.filter(article => article && article.i && article.t && article.c && article.d);
+        return articles.filter(
+          (article) =>
+            article && article.i && article.t && article.c && article.d
+        )
       }
-      return [];
+      return []
     },
     // 保存文章
-    saveDraft(title, content, forumId = 0, formuName = '', tagId, collectionId) {
+    saveDraft(
+      title,
+      content,
+      forumId = 0,
+      formuName = '',
+      tagId,
+      collectionId
+    ) {
       this.drafts.push({
         i: nanoid(),
         f: forumId,
@@ -91,21 +118,29 @@ export default ({
       })
       const userId = this.$store.state.user.userInfo.userId
       if (!userId) {
-        return false;
+        return false
       }
       const key = `draft:${userId}:article`
       localStorage.setItem(key, JSON.stringify(this.drafts))
       this.$toast('保存草稿成功！')
     },
     // 更新文章
-    updateDraft(id, title, content, forumId = 0, formuName = '', tagId, collectionId) {
-      const index = this.drafts.findIndex(article => article.i === id);
+    updateDraft(
+      id,
+      title,
+      content,
+      forumId = 0,
+      formuName = '',
+      tagId,
+      collectionId
+    ) {
+      const index = this.drafts.findIndex((article) => article.i === id)
       if (index === -1) {
-        return false;
+        return false
       }
       const userId = this.$store.state.user.userInfo.userId
       if (!userId) {
-        return false;
+        return false
       }
       const key = `draft:${userId}:article`
       this.drafts[index] = {
@@ -125,19 +160,19 @@ export default ({
     removeDraft(id) {
       const userId = this.$store.state.user.userInfo.userId
       if (!userId) {
-        return false;
+        return false
       }
       const key = `draft:${userId}:article`
-      this.drafts = this.drafts.filter(article => article.i !== id)
+      this.drafts = this.drafts.filter((article) => article.i !== id)
       localStorage.setItem(key, JSON.stringify(this.drafts))
     },
     // 设置父组件文章
     setContent(item) {
-      this.$emit('setDraftContent', item);
-      this.visible = false;
-    }
+      this.$emit('setDraftContent', item)
+      this.visible = false
+    },
   },
-});
+}
 </script>
 
 <style lang="scss" scoped>
@@ -146,7 +181,7 @@ export default ({
   color: #606266;
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   line-height: 24px;
   text-transform: uppercase;
   margin-left: 10px;
@@ -219,7 +254,6 @@ export default ({
     }
   }
 }
-
 
 ul {
   li {

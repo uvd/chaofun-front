@@ -12,7 +12,7 @@
       :class="[
         'el-upload-list',
         'el-upload-list--picture-card',
-        { 'is-disabled': disabled }
+        { 'is-disabled': disabled },
       ]"
       name="el-list"
     >
@@ -22,34 +22,35 @@
         tabindex="0"
         class="el-upload-list__item image-uploader-file"
       >
-        <span :style="{
-          backgroundImage: `url(${file.url})`
-        }">
+        <span
+          :style="{
+            backgroundImage: `url(${file.url})`,
+          }"
+        >
         </span>
         <el-progress
           v-if="file.status === 'uploading'"
           type="circle"
           :stroke-width="6"
-          :percentage="parsePercentage(file.percentage)">
+          :percentage="parsePercentage(file.percentage)"
+        >
         </el-progress>
         <span class="el-upload-list__item-actions">
-          <span
-            class="el-upload-list__item-preview"
-          >
-            <i class="el-icon-rank"></i>
+          <span class="el-upload-list__item-preview">
+            <el-icon><el-icon-rank /></el-icon>
           </span>
           <span
             v-if="!disabled"
             class="el-upload-list__item-delete"
             @click="handleRemove(file)"
           >
-            <i class="el-icon-delete"></i>
+            <el-icon><el-icon-delete /></el-icon>
           </span>
         </span>
       </li>
       <li key="add">
         <span class="image-uploader-btn" @click="handleClick">
-          <i class="el-icon-plus"></i>
+          <el-icon><el-icon-plus /></el-icon>
         </span>
       </li>
     </transition-group>
@@ -57,10 +58,18 @@
 </template>
 
 <script>
+import {
+  Rank as ElIconRank,
+  Delete as ElIconDelete,
+  Plus as ElIconPlus,
+} from '@element-plus/icons'
 import draggable from 'vuedraggable'
 export default {
   components: {
     draggable,
+    ElIconRank,
+    ElIconDelete,
+    ElIconPlus,
   },
   model: {
     prop: 'files',
@@ -69,12 +78,12 @@ export default {
     files: {
       type: Array,
       default() {
-        return [];
-      }
+        return []
+      },
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     handleMove: Function,
     handleRemove: Function,
@@ -83,24 +92,25 @@ export default {
     listType: String,
     isVideo: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   methods: {
     handleStart() {
-      this.drag = true;
-      this.handleMove(true);
+      this.drag = true
+      this.handleMove(true)
     },
     handleEnd() {
-      this.drag = false;
-      this.handleMove(false);
+      this.drag = false
+      this.handleMove(false)
     },
     parsePercentage(val) {
-      return parseInt(val, 10);
+      return parseInt(val, 10)
     },
-  }
+  },
 }
 </script>
+
 <style lang="scss" scoped>
 .image-uploader-sort-list {
   padding: 12px;
@@ -140,7 +150,6 @@ export default {
           }
         }
       }
-      
     }
     .ghost {
       opacity: 0.5;

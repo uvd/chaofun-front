@@ -62,7 +62,7 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '多言語',
     externalLink: '外部リンク',
-    profile: 'プロフィール'
+    profile: 'プロフィール',
   },
   navbar: {
     dashboard: 'トップ',
@@ -70,7 +70,7 @@ export default {
     logOut: 'ログアウト',
     profile: 'プロフィール',
     theme: 'テーマ変更',
-    size: '画面サイズ'
+    size: '画面サイズ',
   },
   login: {
     title: 'ユーザログイン',
@@ -79,11 +79,11 @@ export default {
     password: 'パスワード',
     any: 'password',
     thirdparty: '外部IDでログイン',
-    thirdpartyTips: 'ローカル環境ではログインできません。実装が必要です。'
+    thirdpartyTips: 'ローカル環境ではログインできません。実装が必要です。',
   },
   documentation: {
     documentation: 'ドキュメント',
-    github: 'Github Link'
+    github: 'Github Link',
   },
   permission: {
     addRole: 'ロール追加',
@@ -93,20 +93,24 @@ export default {
     tips: 'v-permissionは使えない時があります。例えば: Element-UI の el-tab、 el-table-column 及び他の dom。v-ifを使う必要があります。',
     delete: '削除',
     confirm: '確認',
-    cancel: 'キャンセル'
+    cancel: 'キャンセル',
   },
   guide: {
     description: 'ガイドは各機能の説明です。',
-    button: 'ガイドを見る'
+    button: 'ガイドを見る',
   },
   components: {
     documentation: 'ドキュメント',
-    tinymceTips: 'tinymceは管理画面に重要な機能ですが、その同時に落とし穴がありあす。tinymceを使う道のりが大変でした。Tinymceを使う時に各自のプロジェクト状況で判断が必要です。ドキュメントはこちら',
-    dropzoneTips: 'Third partyのパッケージを使わず、独自の実装しています。詳細は @/components/Dropzone',
+    tinymceTips:
+      'tinymceは管理画面に重要な機能ですが、その同時に落とし穴がありあす。tinymceを使う道のりが大変でした。Tinymceを使う時に各自のプロジェクト状況で判断が必要です。ドキュメントはこちら',
+    dropzoneTips:
+      'Third partyのパッケージを使わず、独自の実装しています。詳細は @/components/Dropzone',
     stickyTips: 'ページの指定位置へスクロールした場合、表示されます。',
     backToTopTips1: 'トップへスクロールが表示されます。',
-    backToTopTips2: 'ボタンのスタイルはカスタマイズできます。例えば、show/hide、height、position。 またはElementのel-tooltipを使って、ツールチップを実装できます。',
-    imageUploadTips: 'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。'
+    backToTopTips2:
+      'ボタンのスタイルはカスタマイズできます。例えば、show/hide、height、position。 またはElementのel-tooltipを使って、ツールチップを実装できます。',
+    imageUploadTips:
+      'mockjsは使えないため、カスタマイズしています。公式の最新バージョンを使ってください。',
   },
   table: {
     dynamicTips1: '先頭は固定、最後に追加',
@@ -132,44 +136,46 @@ export default {
     draft: '下書き',
     delete: 'キャンセル',
     cancel: 'キャンセル',
-    confirm: '確認'
+    confirm: '確認',
   },
   example: {
-    warning: '新規作成と編集画面は keep-alive を使えないです。keep-alive の include はrouteのキャッシュは使えないです。そのため、component name を使ってキャッシュさせるようにします。このようなキャッシュ機能を作りたい場合，localStorageを使う手があります。もしくは keep-alive の includeを使って、全ページキャッシュする方法はあります。'
+    warning:
+      '新規作成と編集画面は keep-alive を使えないです。keep-alive の include はrouteのキャッシュは使えないです。そのため、component name を使ってキャッシュさせるようにします。このようなキャッシュ機能を作りたい場合，localStorageを使う手があります。もしくは keep-alive の includeを使って、全ページキャッシュする方法はあります。',
   },
   errorLog: {
     tips: '右上のbugアイコンをクリックしてください。',
-    description: '管理画面はspaを使う場合が多い、ユーザ体現向上はできますが、想定外エラーが発生する場合があります。Vueはそのエラーハンドリング機能を提供し、エラーレポートができます。',
-    documentation: 'ドキュメント'
+    description:
+      '管理画面はspaを使う場合が多い、ユーザ体現向上はできますが、想定外エラーが発生する場合があります。Vueはそのエラーハンドリング機能を提供し、エラーレポートができます。',
+    documentation: 'ドキュメント',
   },
   excel: {
     export: 'エクスポート',
     selectedExport: 'エクスポート対象を選択してください。',
-    placeholder: 'ファイル名を入力してください。'
+    placeholder: 'ファイル名を入力してください。',
   },
   zip: {
     export: 'エクスポート',
-    placeholder: 'ファイル名を入力してください。'
+    placeholder: 'ファイル名を入力してください。',
   },
   pdf: {
-    tips: 'window.print() を使ってPDFダウンロードしています。'
+    tips: 'window.print() を使ってPDFダウンロードしています。',
   },
   theme: {
     change: 'テーマ切替',
     documentation: 'ドキュメント',
-    tips: 'Tips: テーマの切り替え方法はnavbarのtheme-pickと異なります、使い方はドキュメントを確認してください。'
+    tips: 'Tips: テーマの切り替え方法はnavbarのtheme-pickと異なります、使い方はドキュメントを確認してください。',
   },
   tagsView: {
     refresh: '更新',
     close: '閉じる',
     closeOthers: 'その他閉じる',
-    closeAll: 'すべて閉じる'
+    closeAll: 'すべて閉じる',
   },
   settings: {
     title: 'システムテーマ',
     theme: 'テーマ色',
     tagsView: 'Tags-View 開く',
     fixedHeader: 'Fixed Header',
-    sidebarLogo: 'Sidebar Logo'
-  }
+    sidebarLogo: 'Sidebar Logo',
+  },
 }

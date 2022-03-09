@@ -17,21 +17,23 @@
         <span> [类型] </span>
         帖子标题
       </p>
-      <p v-else>
-        没有选择标签
-      </p>
+      <p v-else>没有选择标签</p>
     </div>
     <el-input
       placeholder="搜索标签"
-      prefix-icon="el-icon-search"
+      :prefix-icon="ElIconSearch"
       v-model="tagSearch"
     >
     </el-input>
     <el-radio-group v-model="tagId" @change="changeTag">
-      <div class="tag-option" v-for="item in tags.filter(tag => tag.name.indexOf(tagSearch) > -1)" v-bind:key="item.id">
-        <el-radio :label="item.id" >
+      <div
+        class="tag-option"
+        v-for="item in tags.filter((tag) => tag.name.indexOf(tagSearch) > -1)"
+        v-bind:key="item.id"
+      >
+        <el-radio :label="item.id">
           <el-tag :color="item.backgroundColor || '#ff9300'">
-          #{{ item.name }}
+            #{{ item.name }}
           </el-tag>
         </el-radio>
       </div>
@@ -42,99 +44,119 @@
         @click="confirmTag"
         type="primary"
         round
-      >选 择</el-button>
+        >选 择</el-button
+      >
       <el-button @click="clearTag" round>清除选择</el-button>
     </div>
 
     <el-button
       slot="reference"
-      icon="el-icon-price-tag"
+      :icon="ElIconPriceTag"
       v-bind:class="{ 'tag-button-no-tag': !dataTagId }"
-      :style="{ backgroundColor: tag && tag.backgroundColor || '#ff9300', borderColor: tag && tag.backgroundColor || '#ff9300' }"
-    >{{dataTagId && tag && '#' + tag.name || '标 签'}} <i class="el-icon-arrow-down" v-if="dataTagId" /></el-button>
+      :style="{
+        backgroundColor: (tag && tag.backgroundColor) || '#ff9300',
+        borderColor: (tag && tag.backgroundColor) || '#ff9300',
+      }"
+      >{{ (dataTagId && tag && '#' + tag.name) || '标 签' }}
+      <el-icon><el-icon-arrow-down /></el-icon
+    ></el-button>
   </el-popover>
 </template>
 
 <script>
+import {
+  ArrowDown as ElIconArrowDown,
+  Search as ElIconSearch,
+  PriceTag as ElIconPriceTag,
+} from '@element-plus/icons'
 import { getlistTag } from '@/api/api'
 export default {
+  data() {
+    return {
+      dataTagId: null,
+      // Tag 列表
+      tags: [],
+      // 选中Tag
+      tag: null,
+      // 预选Tag
+      tagId: null,
+      // Tag 搜索
+      tagSearch: '',
+      // Tag Modal是否显示
+      tagModalVisible: false,
+      ElIconSearch,
+      ElIconPriceTag,
+    }
+  },
+  components: {
+    ElIconArrowDown,
+  },
   props: {
     forumId: {
       type: String,
       required: false,
     },
-    
   },
   model: {
     prop: 'dataTagId',
   },
-  data() {
-    return {
-      dataTagId: null,
-      tags: [], // Tag 列表
-      tag: null, // 选中Tag
-      tagId: null, // 预选Tag
-      tagSearch: '', // Tag 搜索
-      tagModalVisible: false, // Tag Modal是否显示
-    }
-  },
   mounted() {
-    this.forumId && this.getForumTag(this.forumId);
+    this.forumId && this.getForumTag(this.forumId)
   },
   watch: {
-   forumId(newId, oldId) {
-     if (newId !== oldId) {
-       this.getForumTag(this.forumId);
-       this.clearTag();
-     }
-   } 
+    forumId(newId, oldId) {
+      if (newId !== oldId) {
+        this.getForumTag(this.forumId)
+        this.clearTag()
+      }
+    },
   },
   methods: {
     // === Tag ===
     // 获取论坛Tag
     async getForumTag(forumId) {
-      const result = await getlistTag({ forumId });
-      this.tags = result.data;
+      const result = await getlistTag({ forumId })
+      this.tags = result.data
     },
     // 修改Tag
     changeTag(label) {
-      this.tag = this.tags.find(tag => tag.id === label);
+      this.tag = this.tags.find((tag) => tag.id === label)
     },
     // 设置Tag
     async setTag(label) {
-      await this.getForumTag(this.forumId);
-      this.tag = this.tags.find(tag => tag.id === label);
-      this.tagId = label;
-      this.dataTagId = label;
+      await this.getForumTag(this.forumId)
+      this.tag = this.tags.find((tag) => tag.id === label)
+      this.tagId = label
+      this.dataTagId = label
     },
     // 清除Tag
     clearTag() {
-      this.tag = null;
-      this.tagId = null;
-      this.dataTagId = null;
-      this.$emit('input', this.dataTagId);
-      this.tagSearch = '';
+      this.tag = null
+      this.tagId = null
+      this.dataTagId = null
+      this.$emit('input', this.dataTagId)
+      this.tagSearch = ''
     },
     // 确认Tag
     confirmTag() {
-      this.tagModalVisible = false;
-      this.dataTagId = this.tagId;
-      this.$emit('input', this.dataTagId);
-      this.tagSearch = '';
+      this.tagModalVisible = false
+      this.dataTagId = this.tagId
+      this.$emit('input', this.dataTagId)
+      this.tagSearch = ''
     },
     // 关闭事件
     tagSelectorHide() {
       if (this.tagId && this.dataTagId !== this.tagId) {
-        this.tagId = null;
-        this.tag = null;
-        this.tagSearch = '';
+        this.tagId = null
+        this.tag = null
+        this.tagSearch = ''
       }
     },
-  }
+  },
 }
 </script>
 
-<style type='text/scss' lang='scss' scoped>
+<style lang="scss" scoped type="text/scss">
 .tag-selector {
   display: flex;
   margin-right: 4px;

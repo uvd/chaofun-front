@@ -12,13 +12,19 @@
     <div class="collection-search">
       <el-input
         placeholder="搜索合集"
-        prefix-icon="el-icon-search"
+        :prefix-icon="ElIconSearch"
         v-model="collectionSearch"
       >
       </el-input>
       <el-radio-group v-model="collectionId" @change="changeCollection">
-        <div class="collection-option" v-for="item in collections.filter(collection => collection.name.indexOf(collectionSearch) > -1)" v-bind:key="item.id">
-          <el-radio :label="item.id" >
+        <div
+          class="collection-option"
+          v-for="item in collections.filter(
+            (collection) => collection.name.indexOf(collectionSearch) > -1
+          )"
+          v-bind:key="item.id"
+        >
+          <el-radio :label="item.id">
             {{ item.name }}
           </el-radio>
         </div>
@@ -29,7 +35,9 @@
       <el-form-item label="新增合集">
         <p>允许文字和Emoj表情</p>
         <el-input v-model="newCollection.name">
-          <el-button type="primary" @click="onAddCollection" slot="append">新增</el-button>
+          <el-button type="primary" @click="onAddCollection" slot="append"
+            >新增</el-button
+          >
         </el-input>
       </el-form-item>
     </el-form>
@@ -40,22 +48,53 @@
         @click="confirmCollection"
         type="primary"
         round
-      >选 择</el-button>
+        >选 择</el-button
+      >
       <el-button @click="clearCollection" round>清除选择</el-button>
     </div>
 
     <el-button
       slot="reference"
-      icon="el-icon-collection"
+      :icon="ElIconCollection"
       v-bind:class="{ 'collection-button-no-collection': !dataCollectionId }"
-    >{{dataCollectionId && collection && collection.name || '合 集'}} <i class="el-icon-arrow-down" v-if="dataCollectionId" /></el-button>
+      >{{ (dataCollectionId && collection && collection.name) || '合 集' }}
+      <el-icon><el-icon-arrow-down /></el-icon
+    ></el-button>
   </el-popover>
-
 </template>
 
 <script>
+import {
+  ArrowDown as ElIconArrowDown,
+  Search as ElIconSearch,
+  Collection as ElIconCollection,
+} from '@element-plus/icons'
 import { addCollection, userCollectionList } from '@/api/api'
 export default {
+  data() {
+    return {
+      dataCollectionId: null,
+      // 用户合集
+      collections: [],
+      // 合集搜索
+      collectionSearch: '',
+      // 合集ID
+      collectionId: null,
+      // 合集当前选中
+      collection: null,
+      // 合集 Modal是否显示
+      collectionModalVisible: false,
+      // 新增合集
+      newCollection: {
+        name: null,
+      },
+      ElIconSearch,
+      ElIconCollection,
+    }
+  },
+  components: {
+    ElIconArrowDown,
+  },
   props: {
     forumId: {
       type: String,
@@ -65,78 +104,69 @@ export default {
   model: {
     prop: 'dataCollectionId',
   },
-  data() {
-    return {
-      dataCollectionId: null,
-      collections: [], // 用户合集
-      collectionSearch: '', // 合集搜索
-      collectionId: null, // 合集ID
-      collection: null, // 合集当前选中
-      collectionModalVisible: false, // 合集 Modal是否显示
-      newCollection: {
-        name: null,
-      }, // 新增合集
-    }
-  },
   mounted() {
-    this.getCollection();
+    this.getCollection()
   },
   methods: {
     // === Collection ===
     // 获取Collection
     async getCollection() {
-      const result = await userCollectionList();
-      this.collections = result.data;
+      const result = await userCollectionList()
+      this.collections = result.data
     },
     // 修改Collection
     changeCollection(label) {
-      this.collection = this.collections.find(collection => collection.id === label)
-      this.$emit('input', label);
+      this.collection = this.collections.find(
+        (collection) => collection.id === label
+      )
+      this.$emit('input', label)
     },
     // 设置Collection Id
     setCollection(label) {
-      this.collection = this.collections.find(collection => collection.id === label)
+      this.collection = this.collections.find(
+        (collection) => collection.id === label
+      )
       this.collectionId = label
-      this.dataCollectionId = label;
+      this.dataCollectionId = label
     },
     // 清除Collection
     clearCollection() {
-      this.collection = null;
-      this.collectionId = null;
-      this.$emit('input', this.collectionId);
-      this.dataCollectionId = null;
-      this.collectionSearch = '';
-      this.newCollection.name = '';
+      this.collection = null
+      this.collectionId = null
+      this.$emit('input', this.collectionId)
+      this.dataCollectionId = null
+      this.collectionSearch = ''
+      this.newCollection.name = ''
     },
     // 确认Collection
     confirmCollection() {
-      this.collectionModalVisible = false;
-      this.dataCollectionId = this.collectionId;
-      this.collectionSearch = '';
-      this.newCollection.name = '';
+      this.collectionModalVisible = false
+      this.dataCollectionId = this.collectionId
+      this.collectionSearch = ''
+      this.newCollection.name = ''
     },
     // 关闭事件
     collectionSelectorHide() {
       if (this.collectionId && this.dataCollectionId !== this.collectionId) {
-        this.collectionId = null;
-        this.$emit('input', this.collectionId);
-        this.collection = null;
-        this.collectionSearch = '';
-        this.newCollection.name = '';
+        this.collectionId = null
+        this.$emit('input', this.collectionId)
+        this.collection = null
+        this.collectionSearch = ''
+        this.newCollection.name = ''
       }
     },
     // 新增合集
     async onAddCollection() {
-      const result = await addCollection(this.newCollection);
+      const result = await addCollection(this.newCollection)
       if (result.success && result.data) {
-        this.collections.push(result.data);
-        this.newCollection.name = '';
-        return;
+        this.collections.push(result.data)
+        this.newCollection.name = ''
+        return
       }
 
       // TODO: 提示新增错误
     },
-  }
+  },
 }
 </script>
 
@@ -228,7 +258,7 @@ export default {
       flex-direction: row;
     }
   }
-  
+
   .collection-add {
     background: #fff;
     padding: 16px;
@@ -237,7 +267,7 @@ export default {
       .el-form-item__label {
         font-size: 10px;
         font-weight: 700;
-        letter-spacing: .5px;
+        letter-spacing: 0.5px;
         line-height: 12px;
         color: #606266;
         margin-bottom: 8px;
@@ -260,7 +290,6 @@ export default {
           color: #5a5e66;
         }
       }
-      
     }
   }
   .collection-buttons {

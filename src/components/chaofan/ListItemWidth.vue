@@ -46,9 +46,14 @@
 
         <div v-if="item.type != 'link'" class="title">
           <div v-if="item.tags.length" class="tags">
-            <div  v-for="(it, ins) in item.tags" :key="ins">
-                <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
-                ># {{ it.name }}</span>
+            <div v-for="(it, ins) in item.tags" :key="ins">
+              <span
+                :style="{
+                  backgroundColor: it.backgroundColor || '#ff9300',
+                  color: it.fontColor || '#fff',
+                }"
+                ># {{ it.name }}</span
+              >
             </div>
           </div>
           {{ item.title }}
@@ -95,8 +100,8 @@
           class="item_video"
         >
           <!-- <div class="title">
-            {{item.title}}
-          </div> -->
+              {{item.title}}
+            </div> -->
           <div class="video">
             <iframe
               v-if="!ISPHONE"
@@ -138,17 +143,17 @@
           :item="item"
         ></itemVote>
         <itemPrediction
-            v-if="item.type == 'prediction'"
-            @callBack="callBack"
-            :index="0"
-            :item="item"
+          v-if="item.type == 'prediction'"
+          @callBack="callBack"
+          :index="0"
+          :item="item"
         ></itemPrediction>
 
         <!-- 转发 -->
         <div v-if="item.type == 'forward'" class="item_forward">
           <!-- <div class="title">
-            {{item.title}}
-          </div> -->
+              {{item.title}}
+            </div> -->
           <div @click.stop="toDetail(item.sourcePost)" class="forward_border">
             <!-- 链接 -->
 
@@ -169,7 +174,7 @@
                     { left_img_display: item.sourcePost.cover },
                   ]"
                 >
-                  <i v-if="!item.sourcePost.cover" class="el-icon-link"></i>
+                  <el-icon><el-icon-link /></el-icon>
                   <img
                     v-if="item.sourcePost.cover"
                     :src="
@@ -338,31 +343,31 @@
             </span>
           </div>
           <div>
-            <i class="el-icon-s-comment"></i>
+            <el-icon><el-icon-s-comment /></el-icon>
             <span style="padding: 0 2px">{{ item.comments }}</span
             >评论
           </div>
           <!-- <div class="b_icon" @click.stop="share(item)" v-clipboard:copy="message" v-clipboard:success="onCopy"><i class="el-icon-share"></i> 分享</div> -->
           <el-dropdown @command="handleCommand" trigger="click">
             <span @click.stop="" class="el-dropdown-link">
-              <i class="el-icon-share"></i> 分享
+              <el-icon><el-icon-share /></el-icon> 分享
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item
                 :command="{ type: 'copy', item: item }"
                 v-clipboard:copy="message"
                 v-clipboard:success="onCopy"
-                icon="el-icon-document-copy"
+                :icon="ElIconDocumentCopy"
                 >复制链接</el-dropdown-item
               >
               <el-dropdown-item
                 :command="{ type: 'share', item: item }"
-                icon="el-icon-s-promotion"
+                :icon="ElIconSPromotion"
                 >转发到</el-dropdown-item
               >
               <el-dropdown-item
                 :command="{ type: 'shareWeibo', item: item }"
-                icon="el-icon-s-promotion"
+                :icon="ElIconSPromotion"
                 >分享到微博</el-dropdown-item
               >
             </el-dropdown-menu>
@@ -371,9 +376,9 @@
             :class="['b_icon', { save_active: item.save }]"
             @click.stop="savePost(item)"
           >
-            <i class="el-icon-s-help"></i>
+            <el-icon><el-icon-s-help /></el-icon>
             <span style="padding: 0 2px">{{
-              item.save ? "已收藏" : "收藏"
+              item.save ? '已收藏' : '收藏'
             }}</span>
           </div>
         </div>
@@ -391,40 +396,47 @@
 </template>
 
 <script>
-import * as api from "@/api/api";
+import {
+  Link as ElIconLink,
+  SComment as ElIconSComment,
+  Share as ElIconShare,
+  SHelp as ElIconSHelp,
+  DocumentCopy as ElIconDocumentCopy,
+  SPromotion as ElIconSPromotion,
+} from '@element-plus/icons'
+import * as api from '@/api/api'
 // import "moment/locale/zh-cn";
-import moment from "moment";
-import VueClipboard from "vue-clipboard2";
-import forward from "./Forward";
-import Vue from "vue";
-Vue.use(VueClipboard);
+import moment from 'moment'
+import VueClipboard from 'vue-clipboard2'
+import forward from './Forward'
+import Vue from 'vue'
+Vue.use(VueClipboard)
 
-import forwardH5 from "../h5/forward";
-import "vant/lib/image-preview/style";
-import { ImagePreview } from "vant";
-Vue.use(ImagePreview);
-import { parseTime } from "@/utils";
+import forwardH5 from '../h5/forward'
+import 'vant/lib/image-preview/style'
+import { ImagePreview } from 'vant'
+Vue.use(ImagePreview)
+import { parseTime } from '@/utils'
 
-import itemTopTitle from "./component/itemTopTitle";
-import itemLink from "./component/itemLink";
-import itemImage from "./component/itemImage";
-import itemGif from "./component/itemGif";
-import itemVideo from "./component/itemVideo";
-import itemArticle from "./component/itemArticle";
-import itemVote from "./component/itemVote";
-import itemForwardTitle from "./component/itemForwardTitle";
-import itemPrediction from "./component/itemPrediction";
+import itemTopTitle from './component/itemTopTitle'
+import itemLink from './component/itemLink'
+import itemImage from './component/itemImage'
+import itemGif from './component/itemGif'
+import itemVideo from './component/itemVideo'
+import itemArticle from './component/itemArticle'
+import itemVote from './component/itemVote'
+import itemForwardTitle from './component/itemForwardTitle'
+import itemPrediction from './component/itemPrediction'
 
 export default {
-  name: "list-item",
   data() {
     return {
-      chooseImg: "",
-      imgs: ["", ""],
+      chooseImg: '',
+      imgs: ['', ''],
       positionX: 0,
       positionY: 0,
-      imgX: "",
-      imgY: "",
+      imgX: '',
+      imgY: '',
       size: 90,
       options: {
         steps: 10,
@@ -434,25 +446,15 @@ export default {
       showPhoneCover: false,
       moment: moment,
       centerDialogVisible: false,
-      message: "",
+      message: '',
       dialogs: {
         dialogVisible: false,
         data: {},
       },
       previewlist: [],
-    };
-  },
-  props: {
-    lists: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    isindex: {
-      type: Boolean,
-      default: false,
-    },
+      ElIconDocumentCopy,
+      ElIconSPromotion,
+    }
   },
   components: {
     forward,
@@ -466,32 +468,49 @@ export default {
     itemForwardTitle,
     itemVideo,
     itemPrediction,
+    ElIconLink,
+    ElIconSComment,
+    ElIconShare,
+    ElIconSHelp,
+  },
+  name: 'list-item',
+  props: {
+    lists: {
+      type: Array,
+      default() {
+        return []
+      },
+    },
+    isindex: {
+      type: Boolean,
+      default: false,
+    },
   },
   created() {},
   mounted() {
-    this.$EventBus.$on("refreshItemTag", (params) => {
+    this.$EventBus.$on('refreshItemTag', (params) => {
       //需要执行的代码
-      console.log(params);
+      console.log(params)
       if (params.type) {
         // this.lists[params.index].tags.push(params.tag);
-        this.lists[params.index].tags.splice(0, 1, params.tag);
-      } else if(params&&params.index){
+        this.lists[params.index].tags.splice(0, 1, params.tag)
+      } else if (params && params.index) {
         // this.lists[params.index].tags.splice(
         //   this.lists[params.index].tags.findIndex((i) => i.id == params.tag.id),
         //   1
         // );
-        this.lists[params.index].tags.splice(0, 1);
+        this.lists[params.index].tags.splice(0, 1)
       }
-    });
+    })
   },
   directives: {},
   methods: {
     updateList(index, item) {
-      this.$EventBus.$emit("updateItem", {
+      this.$EventBus.$emit('updateItem', {
         type: 'update',
         postId: item.postId,
         item: item,
-      });
+      })
       // let data = JSON.parse(localStorage.getItem("storedata"));
       // data.list.forEach((it, i) => {
       //   console.log(it);
@@ -504,66 +523,65 @@ export default {
       // // data.list.splice(this.index,1,item);
       // localStorage.setItem("storedata", JSON.stringify(data));
       // console.log("data", data);
-      
     },
     doFocued(bool, id) {
       this.lists.forEach((it) => {
         if (it.userInfo.userId == id) {
-          console.log();
+          console.log()
           if (bool) {
-            it.userInfo.focused = false;
+            it.userInfo.focused = false
           } else {
-            it.userInfo.focused = true;
+            it.userInfo.focused = true
           }
         }
-      });
+      })
     },
     callBack(index, data) {
-      this.lists.splice(0, 1, data);
+      this.lists.splice(0, 1, data)
     },
     doBg(it, its) {
-      var num = it.optionVote;
-      var total = 0;
+      var num = it.optionVote
+      var total = 0
       its.forEach((item) => {
         //  if(item.optionVote){
-        total += item.optionVote * 1;
+        total += item.optionVote * 1
         //  }
-      });
-      return ((num * 100) / total).toFixed(2) + "%";
+      })
+      return ((num * 100) / total).toFixed(2) + '%'
     },
     checkoutVote(item, list) {
-      var a = false;
+      var a = false
       list.forEach((item) => {
         if (item.optionVote) {
-          a = true;
+          a = true
         }
-      });
-      return a;
+      })
+      return a
     },
     parseTime: parseTime,
     onChange() {},
     close() {
-      if (localStorage.getItem("storedata")) {
-        var obj = JSON.parse(localStorage.getItem("storedata"));
-        let { params, query } = obj.from;
-        query.time = new Date().getTime();
-        this.$router.replace({ path: obj.from.path, params, query });
+      if (localStorage.getItem('storedata')) {
+        var obj = JSON.parse(localStorage.getItem('storedata'))
+        let { params, query } = obj.from
+        query.time = new Date().getTime()
+        this.$router.replace({ path: obj.from.path, params, query })
       } else {
-        this.$router.replace({ path: `/f/${this.lists[0].id}` });
+        this.$router.replace({ path: `/f/${this.lists[0].id}` })
       }
     },
     deletePost(item, index) {
-      this.$confirm(`是否确定删除帖子 【${item.title}】？`, "提示", {
-        type: "warning",
-        position: "top",
+      this.$confirm(`是否确定删除帖子 【${item.title}】？`, '提示', {
+        type: 'warning',
+        position: 'top',
       }).then(() => {
         api.deletePost({ postId: item.postId }).then((res) => {
           if (res.success) {
-            this.$message.success("已删除");
-            this.$EventBus.$emit("updateItem", {
+            this.$message.success('已删除')
+            this.$EventBus.$emit('updateItem', {
               type: 'delete',
-              postId: item.postId
-            });
+              postId: item.postId,
+            })
             // var obj = JSON.parse(localStorage.getItem("storedata"));
             // obj.list.forEach((i, ind) => {
             //   if (i.postId == item.postId) {
@@ -571,15 +589,15 @@ export default {
             //   }
             // });
             // localStorage.setItem("storedata", JSON.stringify(obj));
-            this.close();
+            this.close()
           }
-        });
-      });
+        })
+      })
     },
     handleCommand(data) {
-      if (data.type == "copy") {
-        this.share(data.item);
-      } else if (data.type == "share") {
+      if (data.type == 'copy') {
+        this.share(data.item)
+      } else if (data.type == 'share') {
         this.doLoginStatus().then((res) => {
           if (res) {
             this.dialogs.data = {
@@ -587,103 +605,103 @@ export default {
               sourceTitle: data.item.sourcePostId
                 ? data.item.sourcePost.title
                 : data.item.title,
-            };
-            this.dialogs.dialogVisible = true;
+            }
+            this.dialogs.dialogVisible = true
           }
-        });
+        })
       } else {
         let picurl =
-          "https://oss.meibbc.com/gw/img/3380CC9482F74FA89C118FB99F4CE5E7.jpg";
+          'https://oss.meibbc.com/gw/img/3380CC9482F74FA89C118FB99F4CE5E7.jpg'
         let url =
-          "https://chao.fun/p/" + (data.item.sourcePostId || data.item.postId);
+          'https://chao.fun/p/' + (data.item.sourcePostId || data.item.postId)
         var sharesinastring =
-          "http://v.t.sina.com.cn/share/share.php?title=" +
+          'http://v.t.sina.com.cn/share/share.php?title=' +
           data.item.title +
-          "&url=" +
+          '&url=' +
           url +
-          "（分享来自@炒饭社区）" +
-          "&content=utf-8&sourceUrl=" +
+          '（分享来自@炒饭社区）' +
+          '&content=utf-8&sourceUrl=' +
           url +
-          "&searchPic=true&ralateUid=炒饭社区";
+          '&searchPic=true&ralateUid=炒饭社区'
         // window.open(sharesinastring, 'newwindow', 'height=400,width=400,top=100,left=100');
-        window.open(sharesinastring, "_blank");
+        window.open(sharesinastring, '_blank')
       }
     },
     savePost(item) {
       api.savePost({ postId: item.postId }).then((res) => {
         if (res.success) {
           if (item.save) {
-            this.$toast("已取消收藏");
+            this.$toast('已取消收藏')
           } else {
-            this.$toast("收藏成功");
+            this.$toast('收藏成功')
           }
-          item.save = !item.save;
-        } else if (res.errorCode == "need_login") {
+          item.save = !item.save
+        } else if (res.errorCode == 'need_login') {
           this.$login({
             callBack: () => {
-              this.$store.dispatch("user/getInfo");
+              this.$store.dispatch('user/getInfo')
             },
-          });
+          })
         }
-      });
+      })
     },
     onCopy(e) {
-      this.$message.success("链接已复制到剪切板！");
+      this.$message.success('链接已复制到剪切板！')
     },
     share(item) {
-      this.message = location.origin + "/p/" + item.postId;
+      this.message = location.origin + '/p/' + item.postId
     },
     toDetail(item) {
-      this.$router.push({ path: "/p/" + item.postId });
+      this.$router.push({ path: '/p/' + item.postId })
     },
     doZan(v, item, index) {
       if (v == 1) {
         //赞
         if (item.vote != 1) {
           if (item.vote == -1) {
-            item.ups += 2;
+            item.ups += 2
           } else {
-            item.ups += 1;
+            item.ups += 1
           }
-          item.vote = 1;
-          this.lists.splice(index, 1, item);
+          item.vote = 1
+          this.lists.splice(index, 1, item)
 
-          api.upvote_post({ postId: item.postId }).then((res) => {});
+          api.upvote_post({ postId: item.postId }).then((res) => {})
         } else if (item.vote === 1) {
-          item.vote = 0;
-          item.ups -= 1;
-          this.lists.splice(index, 1, item);
-          api.upvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = 0
+          item.ups -= 1
+          this.lists.splice(index, 1, item)
+          api.upvote_post({ postId: item.postId }).then((res) => {})
         }
       } else {
         //踩
         if (item.vote != -1) {
           if (item.vote == 1) {
-            item.ups -= 2;
+            item.ups -= 2
           } else {
-            item.ups -= 1;
+            item.ups -= 1
           }
-          item.vote = -1;
-          this.lists.splice(index, 1, item);
-          api.downvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = -1
+          this.lists.splice(index, 1, item)
+          api.downvote_post({ postId: item.postId }).then((res) => {})
         } else if (item.vote === -1) {
-          item.vote = 0;
-          item.ups += 1;
-          this.lists.splice(index, 1, item);
-          api.downvote_post({ postId: item.postId }).then((res) => {});
+          item.vote = 0
+          item.ups += 1
+          this.lists.splice(index, 1, item)
+          api.downvote_post({ postId: item.postId }).then((res) => {})
         }
       }
-      this.updateList(index, item);
+      this.updateList(index, item)
       console.log('更新数据')
       // this.$EventBus.$emit("resetItem", {index: index,item: item});
       //  this.$EventBus.$emit('updateVote',{index: this.index,item: item});
     },
   },
-};
+}
 </script>
 
-<style type='text/scss' lang='scss' scoped>
-@import "./css/list.scss";
+<style lang="scss" scoped type="text/scss">
+@import './css/list.scss';
 .title {
   padding: 0 0 10px 0;
   font-size: 16px;

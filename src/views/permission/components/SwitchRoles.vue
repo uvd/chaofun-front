@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div style="margin-bottom:15px;">
-      Your roles: {{ roles }}
-    </div>
+    <div style="margin-bottom: 15px">Your roles: {{ roles }}</div>
     Switch roles:
     <el-radio-group v-model="switchRoles">
       <el-radio-button label="editor" />
@@ -25,8 +23,8 @@ export default {
         this.$store.dispatch('user/changeRoles', val).then(() => {
           this.$emit('change')
         })
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

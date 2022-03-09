@@ -6,7 +6,7 @@ const resolve = dir => {
   return path.join(__dirname, dir);
 };
 
-const port = process.env.port || process.env.npm_config_port || 8099 
+const port = process.env.port || process.env.npm_config_port || 8099
 const isProduction = process.env.NODE_ENV === 'production';
 
 // 线上打包路径，请根据项目实际线上情况
@@ -27,13 +27,13 @@ module.exports = {
   indexPath: "index.html", // 指定生成的 index.html 输入路径，默认outputDir
   pages: undefined, // 构建多页
   productionSourceMap: false, // 开启 生产环境的 source map
-  configureWebpack: config => {
-    config.performance = {
-      hints: false
-    }
-    config.output.filename = `[name].11${Timestamp}.js`;
-      config.output.chunkFilename = `[name].22${Timestamp}.js`;
-  },
+  // configureWebpack: config => {
+  //   config.performance = {
+  //     hints: false
+  //   }
+  //   config.output.filename = `[name].11${Timestamp}.js`;
+  //     config.output.chunkFilename = `[name].22${Timestamp}.js`;
+  // },
   chainWebpack: config => {
     // 配置路径别名
     config.resolve.alias
@@ -52,7 +52,7 @@ module.exports = {
       .use('vue-loader')
       .loader('vue-loader')
       .tap(options => {
-        options.compilerOptions.preserveWhitespace = true
+       // options.compilerOptions.preserveWhitespace = true
         return options
       })
       .end()
@@ -115,7 +115,7 @@ module.exports = {
         .use(
           new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn$/)
         );
-      
+
       // 压缩代码
       config.optimization.minimize(true);
       // 分割代码
@@ -133,7 +133,6 @@ module.exports = {
     }
   },
   css: {
-    requireModuleExtension: true, // 启用 CSS modules
     extract: true, // 是否使用css分离插件
     sourceMap: false, // 开启 CSS source maps?
     // css预设器配置项
@@ -146,12 +145,12 @@ module.exports = {
       },
       postcss: {
         plugins: [
-          
+
         ]
       }
     }
   },
-    
+
   // 反向代理的配置
   devServer: {
     host: "0.0.0.0", // ip

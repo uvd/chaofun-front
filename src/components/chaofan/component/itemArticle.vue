@@ -1,84 +1,90 @@
 <template>
- <div>  
+  <div>
     <div v-if="!isDetail" class="item_article">
       <!-- <div class="title">
-        {{item.title}}
-      </div> -->
-      <div :class="['article',{'article_phone': ISPHONE}]">
-        <div v-html="filterContent(item.article.replace(/\n/g, ''))" v-if="/<[^>]+>/g.test(item.article)"></div>
-        <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
+          {{item.title}}
+        </div> -->
+      <div :class="['article', { article_phone: ISPHONE }]">
+        <div
+          v-html="filterContent(item.article.replace(/\n/g, ''))"
+          v-if="/<[^>]+>/g.test(item.article)"
+        ></div>
+        <div v-for="(_item, ins) in item.article.split('\n')" v-else :key="ins">
           <p v-html="filterContent(_item)"></p>
         </div>
         <div class="show_more">查看全文</div>
       </div>
     </div>
-    
+
     <div v-else class="item_article">
       <!-- <div class="title">
-        {{item.title}}
-      </div> -->
-      <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE ? clientWidth-24+'px' : '100%'}">
-
-        <div v-html="item.article.replace(/\n/g, '')" v-if="/<[^>]+>/g.test(item.article)"></div>
+          {{item.title}}
+        </div> -->
+      <div
+        @click.stop=""
+        class="detail_line"
+        id="detail_line"
+        :style="{ width: ISPHONE ? clientWidth - 24 + 'px' : '100%' }"
+      >
+        <div
+          v-html="item.article.replace(/\n/g, '')"
+          v-if="/<[^>]+>/g.test(item.article)"
+        ></div>
 
         <!-- <viewer :trigger="item.article"> -->
-        <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
+        <div v-for="(_item, ins) in item.article.split('\n')" v-else :key="ins">
           <p v-html="_item"></p>
         </div>
         <!-- </viewer> -->
       </div>
     </div>
-    <viewer style="height:0;display:none;" :images="imgsArr">
+    <viewer style="height: 0; display: none" :images="imgsArr">
       <img
-        v-for="(src,index) in imgsArr"
+        v-for="(src, index) in imgsArr"
         :data-source="src"
         :src="src"
-        :id="'k'+index"
+        :id="'k' + index"
         :key="index"
       />
     </viewer>
- </div>
+  </div>
 </template>
 
 <script>
-import 'lazysizes';
+import 'lazysizes'
 // import * as api from '@/api/api'
 export default {
   name: '',
-  data(){
-  return {
-    imgsArr: []
-  }
+  data() {
+    return {
+      imgsArr: [],
+    }
   },
   props: {
     item: {
       type: Object,
-      default(){
+      default() {
         return {}
-      }
+      },
     },
     isDetail: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
-  components: {
-
-  },
-  created() {
-    
-  },
+  components: {},
+  created() {},
   mounted() {
-    var el = document.getElementById('detail_line');
+    var el = document.getElementById('detail_line')
     if (el) {
-      var imgs = el.getElementsByTagName("img");
+      var imgs = el.getElementsByTagName('img')
       for (let index = 0; index < imgs.length; index++) {
-        const element = imgs[index];
-        this.imgsArr.push(element.src);
+        const element = imgs[index]
+        this.imgsArr.push(element.src)
 
-        element.addEventListener('click', function(e) {
-          document.getElementById('k' + index).click();
-        });
+        element.addEventListener('click', function (e) {
+          document.getElementById('k' + index).click()
+        })
       }
     }
     //   console.log(imgs);
@@ -86,7 +92,7 @@ export default {
     //   setTimeout(()=>{
     //     el.getElementsByTagName("img").forEach((item,index)=>{
     //       item.addEventListener('click',function(e){
-            
+
     //         let src = e.target.currentSrc;
     //         document.getElementById('k'+index).click();
     //         console.log(src)
@@ -97,46 +103,49 @@ export default {
     //     console.log(this.imgsArr)
     //   },50)
     // }
-    
   },
   methods: {
-    toUrls(item,params){
-      this.postBehavior(item.postId,'jump');
+    toUrls(item, params) {
+      this.postBehavior(item.postId, 'jump')
       this.toUrl(params)
     },
     // 过滤内容
     filterContent(content) {
       // 列表图片优化（GIF）
       try {
-        if (content.indexOf('data:image') === -1 && content.indexOf('.gif') === -1 ) {
-          content = content.replace(/<img src="([^"]*?)">/g,
+        if (
+          content.indexOf('data:image') === -1 &&
+          content.indexOf('.gif') === -1
+        ) {
+          content = content.replace(
+            /<img src="([^"]*?)">/g,
             '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512/format,webp/quality,q_75">'
-          );
+          )
         }
       } catch (error) {
         // 出现错误不进行替换
-        console.log(error);
+        console.log(error)
       }
-      return content;
-    }
-   }
- }
+      return content
+    },
+  },
+}
 </script>
 
-<style type='text/scss' lang='scss' scoped>
+<style lang="scss" scoped type="text/scss">
 .item_article {
   padding-bottom: 20px !important;
-  .title{
+  .title {
     padding: 0 0 10px 0;
     font-size: 16px;
     font-weight: 600;
   }
-  .article{
+  .article {
     padding-bottom: 10px;
     max-height: 265px;
     overflow: hidden;
     position: relative;
-    .show_more{
+    .show_more {
       position: absolute;
       top: 200px;
       left: 0;
@@ -145,40 +154,41 @@ export default {
       height: 70px;
       line-height: 90px;
       z-index: 1;
-      background: linear-gradient(-180deg,rgba(255,255,255,0) 0%,#fff 50%);
+      background: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, #fff 50%);
     }
   }
-  .article_phone{
+  .article_phone {
     max-height: 160px;
-    .show_more{
+    .show_more {
       top: 110px;
       height: 50px;
       line-height: 60px;
     }
   }
 }
-.item .item_article .article_phone{
-    position: relative;
-    // left: -50px;
-  }
-  .detail_line{
-    width: 100% !important;
-    overflow: hidden;
-    word-break:break-all; /*支持IE，chrome，FF不支持*/
-    word-wrap:break-word;/*支持IE，chrome，FF*/
-    font-size: 16px;
-  }
-  /deep/ .detail_line p{
-    line-height: 1.8em;
-    margin-bottom: 8px;
-    // margin: 1.4em 0;
-  }
-  /deep/ .detail_line img{
-    max-width: 100%;
-    vertical-align: middle;
-    margin: 10px 0;
-  }
+.item .item_article .article_phone {
+  position: relative;
+  // left: -50px;
+}
+.detail_line {
+  width: 100% !important;
+  overflow: hidden;
+  word-break: break-all; /*支持IE，chrome，FF不支持*/
+  word-wrap: break-word; /*支持IE，chrome，FF*/
+  font-size: 16px;
+}
+/deep/ .detail_line p {
+  line-height: 1.8em;
+  margin-bottom: 8px;
+  // margin: 1.4em 0;
+}
+/deep/ .detail_line img {
+  max-width: 100%;
+  vertical-align: middle;
+  margin: 10px 0;
+}
 </style>
+
 <style lang="scss">
 .item_article {
   h1 {
@@ -233,7 +243,6 @@ export default {
     text-decoration: line-through;
   }
 
-  
   li {
     min-height: 22px;
   }
@@ -254,9 +263,10 @@ export default {
   }
   code,
   pre {
-    font-family: Consolas, Courier, "Apple SD \C0B0\B3CC\ACE0\B515   Neo",
-      -apple-system, Lucida Grande, Apple SD Gothic Neo, "\B9D1\C740   \ACE0\B515",
-      Malgun Gothic, Segoe UI, "\B3CB\C6C0", dotum, sans-serif;
+    font-family: Consolas, Courier, 'Apple SD \C0B0\B3CC\ACE0\B515   Neo',
+      -apple-system, Lucida Grande, Apple SD Gothic Neo,
+      '\B9D1\C740   \ACE0\B515', Malgun Gothic, Segoe UI, '\B3CB\C6C0', dotum,
+      sans-serif;
     border: 0;
     border-radius: 0;
   }
@@ -265,7 +275,7 @@ export default {
     color: #c1798b;
     background-color: #f9f2f4;
     padding: 2px 3px;
-    letter-spacing: -.3px;
+    letter-spacing: -0.3px;
     border-radius: 2px;
   }
 
@@ -322,14 +332,14 @@ export default {
       counter-increment: li;
     }
   }
-  
+
   ol > li:before,
   ul > li:before {
     display: inline-block;
     position: absolute;
   }
   ul > li:before {
-    content: "";
+    content: '';
     margin-top: 11px;
     margin-left: -17px;
     width: 5px;
@@ -338,7 +348,7 @@ export default {
     background-color: #ccc;
   }
   ol > li:before {
-    content: "." counter(li);
+    content: '.' counter(li);
     margin-left: -28px;
     width: 24px;
     line-height: 28px;
@@ -374,7 +384,7 @@ export default {
       background-repeat: no-repeat;
       background-size: 18px 18px;
       background-position: 50%;
-      content: "";
+      content: '';
       margin-left: 0;
       margin-top: 0;
       border-radius: 2px;
@@ -385,10 +395,10 @@ export default {
       top: 6px;
       cursor: pointer;
       background: transparent
-        url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkYiIHN0cm9rZT0iI0NDQyI+PGc+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEwMzAgLTI5NikgdHJhbnNsYXRlKDc4OCAxOTIpIHRyYW5zbGF0ZSgyNDIgMTA0KSI+PHJlY3Qgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiB4PSIuNSIgeT0iLjUiIHJ4PSIyIi8+PC9nPjwvZz48L2c+PC9nPjwvc3ZnPg==");
+        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkYiIHN0cm9rZT0iI0NDQyI+PGc+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEwMzAgLTI5NikgdHJhbnNsYXRlKDc4OCAxOTIpIHRyYW5zbGF0ZSgyNDIgMTA0KSI+PHJlY3Qgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3IiB4PSIuNSIgeT0iLjUiIHJ4PSIyIi8+PC9nPjwvZz48L2c+PC9nPjwvc3ZnPg==');
     }
     &.checked:before {
-      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0Qjk2RTYiPjxnPjxnPjxwYXRoIGQ9Ik0xNiAwYzEuMTA1IDAgMiAuODk1IDIgMnYxNGMwIDEuMTA1LS44OTUgMi0yIDJIMmMtMS4xMDUgMC0yLS44OTUtMi0yVjJDMCAuODk1Ljg5NSAwIDIgMGgxNHptLTEuNzkzIDUuMjkzYy0uMzktLjM5LTEuMDI0LS4zOS0xLjQxNCAwTDcuNSAxMC41ODUgNS4yMDcgOC4yOTNsLS4wOTQtLjA4M2MtLjM5Mi0uMzA1LS45Ni0uMjc4LTEuMzIuMDgzLS4zOS4zOS0uMzkgMS4wMjQgMCAxLjQxNGwzIDMgLjA5NC4wODNjLjM5Mi4zMDUuOTYuMjc4IDEuMzItLjA4M2w2LTYgLjA4My0uMDk0Yy4zMDUtLjM5Mi4yNzgtLjk2LS4wODMtMS4zMnoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMDUwIC0yOTYpIHRyYW5zbGF0ZSg3ODggMTkyKSB0cmFuc2xhdGUoMjYyIDEwNCkiLz48L2c+PC9nPjwvZz48L2c+PC9zdmc+");
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiM0Qjk2RTYiPjxnPjxnPjxwYXRoIGQ9Ik0xNiAwYzEuMTA1IDAgMiAuODk1IDIgMnYxNGMwIDEuMTA1LS44OTUgMi0yIDJIMmMtMS4xMDUgMC0yLS44OTUtMi0yVjJDMCAuODk1Ljg5NSAwIDIgMGgxNHptLTEuNzkzIDUuMjkzYy0uMzktLjM5LTEuMDI0LS4zOS0xLjQxNCAwTDcuNSAxMC41ODUgNS4yMDcgOC4yOTNsLS4wOTQtLjA4M2MtLjM5Mi0uMzA1LS45Ni0uMjc4LTEuMzIuMDgzLS4zOS4zOS0uMzkgMS4wMjQgMCAxLjQxNGwzIDMgLjA5NC4wODNjLjM5Mi4zMDUuOTYuMjc4IDEuMzItLjA4M2w2LTYgLjA4My0uMDk0Yy4zMDUtLjM5Mi4yNzgtLjk2LS4wODMtMS4zMnoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xMDUwIC0yOTYpIHRyYW5zbGF0ZSg3ODggMTkyKSB0cmFuc2xhdGUoMjYyIDEwNCkiLz48L2c+PC9nPjwvZz48L2c+PC9zdmc+');
     }
   }
 }

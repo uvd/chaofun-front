@@ -1,13 +1,12 @@
 import request from '@/utils/request'
 import qs from 'qs'
 
-
 export function getHome(params) {
   return request({
     // url: '/api/list_combine',
     url: '/api/v0/list_combine',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -16,7 +15,7 @@ export function getByPath(path, params) {
     // url: '/api/list_combine',
     url: path,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -24,7 +23,7 @@ export function getMenu(params) {
   return request({
     url: '/api/get_menu',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -32,7 +31,7 @@ export function toLogin(params) {
   return request({
     url: '/api/login',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -40,10 +39,9 @@ export function toRegister(params) {
   return request({
     url: '/api/register',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 发布文本帖子 */
 export function submitArticle(params) {
@@ -51,9 +49,9 @@ export function submitArticle(params) {
     url: '/api/v0/submit_article',
     method: 'post',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -62,7 +60,7 @@ export function submitVote(params) {
   return request({
     url: '/api/v0/submit_vote',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -71,7 +69,7 @@ export function submitPrediction(params) {
   return request({
     url: '/api/v0/submit_prediction',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -80,7 +78,7 @@ export function toVote(params) {
   return request({
     url: '/api/v0/post/vote',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -89,19 +87,16 @@ export function circusee(params) {
   return request({
     url: '/api/v0/post/circusee',
     method: 'get',
-    params
+    params,
   })
 }
-
-
-
 
 /** 删除帖子 */
 export function deletePost(params) {
   return request({
     url: '/api/delete_post',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -111,7 +106,7 @@ export function uploadImage(params) {
     url: '/api/upload_image',
     method: 'post',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     data: params,
     timeout: 10 * 60 * 1000, // 上传文件最大支持2分钟
@@ -123,7 +118,7 @@ export function applyForum(query) {
   return request({
     url: '/api/v0/apply_forum',
     method: 'get',
-    params: query
+    params: query,
   })
 }
 
@@ -132,7 +127,7 @@ export function applyMod(query) {
   return request({
     url: '/api/v0/apply_mod',
     method: 'get',
-    params: query
+    params: query,
   })
 }
 
@@ -141,17 +136,16 @@ export function submitForward(params) {
   return request({
     url: '/api/v0/submit_forward',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 收藏帖子 */
 export function savePost(params) {
   return request({
     url: '/api/v0/save_post',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -160,17 +154,16 @@ export function listSaved(params) {
   return request({
     url: '/api/v0/me/list_saved',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 获取用户信息 */
 export function getUserInfo(params) {
   return request({
     url: '/api/get_profile',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -179,7 +172,7 @@ export function tologout(params) {
   return request({
     url: '/api/logout',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -189,7 +182,7 @@ export function getPosts(params) {
     // url: '/api/list',
     url: '/api/v0/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -198,7 +191,7 @@ export function getForumInfo(params) {
   return request({
     url: '/api/get_forum_info',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -207,7 +200,7 @@ export function getForumRules(params) {
   return request({
     url: '/api/v0/forum/listRules',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -216,7 +209,7 @@ export function getModInfo(params) {
   return request({
     url: '/api/v0/mod/getInfo',
     method: 'get',
-    params
+    params,
   })
 }
 /** 加入板块 */
@@ -224,7 +217,7 @@ export function joinForum(params) {
   return request({
     url: '/api/join_forum',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -233,7 +226,7 @@ export function leaveForum(params) {
   return request({
     url: '/api/leave_forum',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -243,7 +236,7 @@ export function getMyLove(params) {
     // url: '/api/list_upvotes',
     url: '/api/v0/me/list_upvotes',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -252,7 +245,7 @@ export function getComments(params) {
   return request({
     url: '/api/v0/me/listComments',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -261,18 +254,16 @@ export function getListPosts(params) {
   return request({
     url: '/api/v0/me/list_posts',
     method: 'get',
-    params
+    params,
   })
 }
-
-
 
 /** 搜索帖子 */
 export function getSearch(params) {
   return request({
     url: '/api/search',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -281,17 +272,16 @@ export function getSearchUser(params) {
   return request({
     url: '/api/v0/searchUser',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 点赞 */
 export function upvote_post(params) {
   return request({
     url: '/api/upvote_post',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -300,7 +290,7 @@ export function downvote_post(params) {
   return request({
     url: '/api/downvote_post',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -309,17 +299,16 @@ export function generate_secret_image(params) {
   return request({
     url: '/api/generate_secret_image',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 删除 secret 图片 */
 export function delete_secret_image(params) {
   return request({
     url: '/api/delete_secret_image',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -328,7 +317,7 @@ export function submit_secret_image(params) {
   return request({
     url: '/api/submit_secret_image',
     method: 'post',
-    data: params
+    data: params,
   })
 }
 
@@ -337,7 +326,7 @@ export function list_forums(params) {
   return request({
     url: '/api/list_forums',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -346,7 +335,7 @@ export function getPostInfo(params) {
   return request({
     url: '/api/get_post_info',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -355,7 +344,7 @@ export function checkJoinTournament(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/checkJoin',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -364,18 +353,16 @@ export function joinPredictionsTournament(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/join',
     method: 'get',
-    params
+    params,
   })
 }
-
-
 
 /** 添加评论 */
 export function addComments(params) {
   return request({
     url: '/api/comment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -384,7 +371,7 @@ export function listComments(params) {
   return request({
     url: '/api/list_comments',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -393,17 +380,16 @@ export function listCommentsV0(params) {
   return request({
     url: '/api/v0/list_comments',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 /** 评论点赞 */
 export function upvoteComment(params) {
   return request({
     url: '/api/upvote_comment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -412,7 +398,7 @@ export function downvoteComment(params) {
   return request({
     url: '/api/downvote_comment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -421,7 +407,7 @@ export function searchForum(params) {
   return request({
     url: '/api/search_forum',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -430,7 +416,7 @@ export function submitLink(params) {
   return request({
     url: '/api/submit_link',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -439,7 +425,7 @@ export function submitImage(params) {
   return request({
     url: '/api/submit_image',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -448,7 +434,7 @@ export function postBehavior(params) {
   return request({
     url: '/api/v0/ut',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -457,7 +443,7 @@ export function getUserPosts(params) {
   return request({
     url: '/api/v0/user/list_posts',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -466,7 +452,7 @@ export function getUserUpvotes(params) {
   return request({
     url: '/api/v0/user/list_upvotes',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -475,7 +461,7 @@ export function getUserComments(params) {
   return request({
     url: '/api/v0/user/listComments',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -484,7 +470,7 @@ export function setIcon(params) {
   return request({
     url: '/api/v0/user/set_Icon',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -493,7 +479,7 @@ export function setForumIcon(params) {
   return request({
     url: '/api/v0/setForumIcon',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -502,7 +488,7 @@ export function getWebsiteInfo(params) {
   return request({
     url: '/api/dev/get_website_info',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -511,7 +497,7 @@ export function getActivity(params) {
   return request({
     url: '/api/v0/activity',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -520,7 +506,7 @@ export function getVersion(params) {
   return request({
     url: '/api/dev/getVersion',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -528,7 +514,7 @@ export function getLatestAppVersion(params) {
   return request({
     url: '/api/v0/app/getLatestAppVersion',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -537,7 +523,7 @@ export function getForumAdminMoney(params) {
   return request({
     url: '/api/dev/getForumAdminMoney',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -546,7 +532,7 @@ export function push(params) {
   return request({
     url: '/api/dev/push',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -555,7 +541,7 @@ export function approveApply(params) {
   return request({
     url: '/api/v0/dev/approveApply',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -564,7 +550,7 @@ export function refuseApply(params) {
   return request({
     url: '/api/v0/dev/refuseApply',
     method: 'get',
-    params
+    params,
   })
 }
 /**  */
@@ -572,7 +558,7 @@ export function approveNotify(params) {
   return request({
     url: '/api/v0/dev/approveNotify',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -580,7 +566,7 @@ export function refuseNotify(params) {
   return request({
     url: '/api/v0/dev/refuseNotify',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -589,7 +575,7 @@ export function save_activity(params) {
   return request({
     url: '/api/dev/setActivity',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -598,7 +584,7 @@ export function listAllComments(params) {
   return request({
     url: '/api/dev/listComments',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -607,7 +593,7 @@ export function submitScore(params) {
   return request({
     url: '/api/v0/april/submit_score',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -616,7 +602,7 @@ export function getGameTop(params) {
   return request({
     url: '/api/v0/april/get_top',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -625,14 +611,14 @@ export function messageCheck(params) {
   return request({
     url: '/api/v0/message/check',
     method: 'get',
-    params
+    params,
   })
 }
 export function messageList(params) {
   return request({
     url: '/api/v0/message/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -640,7 +626,7 @@ export function listTags(params) {
   return request({
     url: '/api/v0/forum_tag/list_tags',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -648,16 +634,15 @@ export function getPredictionsTournament(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/get',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 export function listForumsByTag(params) {
   return request({
     url: '/api/list_forums_by_tag',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -665,7 +650,7 @@ export function setDesc(params) {
   return request({
     url: '/api/v0/user/set_desc',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -674,7 +659,7 @@ export function setForumDesc(params) {
   return request({
     url: '/api/v0/setForumDesc',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -683,7 +668,7 @@ export function getUserBadgeList(params) {
   return request({
     url: '/api/v0/badge/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -692,7 +677,7 @@ export function toFocus(params) {
   return request({
     url: '/api/v0/focus/focus',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -701,7 +686,7 @@ export function toUnfocus(params) {
   return request({
     url: '/api/v0/focus/unfocus',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -710,7 +695,7 @@ export function listFans(params) {
   return request({
     url: '/api/v0/focus/list_fans',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -719,7 +704,7 @@ export function listFocus(params) {
   return request({
     url: '/api/v0/focus/list_focus',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -728,7 +713,7 @@ export function userinfo(params) {
   return request({
     url: '/api/v0/user/info',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -737,7 +722,7 @@ export function listTrends(params) {
   return request({
     url: '/api/v0/focus/list_trends',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -746,7 +731,7 @@ export function deleteComment(params) {
   return request({
     url: '/api/v0/delete_comment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -755,7 +740,7 @@ export function highlightComment(params) {
   return request({
     url: '/api/v0/highlightComment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -764,7 +749,7 @@ export function unHighlightComment(params) {
   return request({
     url: '/api/v0/unHighlightComment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -773,7 +758,7 @@ export function modlist(params) {
   return request({
     url: '/api/v0/mod/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -782,7 +767,7 @@ export function getUrlTitle(params) {
   return request({
     url: '/api/v0/httpurl/title',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -790,7 +775,7 @@ export function setVersion(params) {
   return request({
     url: '/api/dev/setVersion',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -799,7 +784,7 @@ export function setPhone(params) {
   return request({
     url: '/api/v0/user/setPhone',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -808,7 +793,7 @@ export function getCode(params) {
   return request({
     url: '/api/v0/phone/getCode',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -817,7 +802,7 @@ export function changeUserName(params) {
   return request({
     url: '/api/v0/user/changeUserName',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -826,7 +811,7 @@ export function getButtonRank(params) {
   return request({
     url: '/api/v0/theButton/getRank',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -834,7 +819,7 @@ export function getPredictionRank(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/getTotalRank',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -843,7 +828,7 @@ export function getUserTopUps(params) {
   return request({
     url: '/api/v0/user/getTopUps',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -852,7 +837,7 @@ export function getForumTopUps(params) {
   return request({
     url: '/api/v0/forum/getTopUps',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -860,7 +845,7 @@ export function Olympics2020Rank(params) {
   return request({
     url: '/api/v0/Olympics2020Rank',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -868,7 +853,7 @@ export function listPins(params) {
   return request({
     url: '/api/v0/forum/listPins',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -876,7 +861,7 @@ export function forumpin(params) {
   return request({
     url: '/api/v0/forum/pin',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -884,7 +869,7 @@ export function forumunpin(params) {
   return request({
     url: '/api/v0/forum/unpin',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -892,7 +877,7 @@ export function getlistTag(params) {
   return request({
     url: '/api/v0/forum/listTag',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -900,7 +885,7 @@ export function listNotify(params) {
   return request({
     url: '/api/v0/forum/listNotify',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -908,7 +893,7 @@ export function listAllNotify(params) {
   return request({
     url: '/api/v0/dev/listAllNotify',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -916,7 +901,7 @@ export function listAllApply(params) {
   return request({
     url: '/api/v0/dev/listAllApply',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -924,7 +909,7 @@ export function addTag(params) {
   return request({
     url: '/api/v0/post/addTag',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -932,7 +917,7 @@ export function addForumUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/add',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -940,7 +925,7 @@ export function removeUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/removeUserTag',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -948,23 +933,22 @@ export function setUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/set',
     method: 'get',
-    params
+    params,
   })
 }
 export function removeForumUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/remove',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 export function listForumUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -972,7 +956,7 @@ export function setForumUserTag(params) {
   return request({
     url: '/api/v0/forum/user_tag/set',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -980,14 +964,14 @@ export function forumSaveTag(params) {
   return request({
     url: '/api/v0/forum/saveTag',
     method: 'get',
-    params
+    params,
   })
 }
 export function forumAddRule(params) {
   return request({
     url: '/api/v0/forum/addRule',
     method: 'post',
-    data: qs.stringify(params)
+    data: qs.stringify(params),
   })
 }
 
@@ -995,7 +979,7 @@ export function forumNotify(params) {
   return request({
     url: '/api/v0/forum/notify',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1003,14 +987,14 @@ export function forumRemoveTag(params) {
   return request({
     url: '/api/v0/forum/removeTag',
     method: 'get',
-    params
+    params,
   })
 }
 export function forumRemoveRule(params) {
   return request({
     url: '/api/v0/forum/removeRule',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1018,7 +1002,7 @@ export function forumRemoveMod(params) {
   return request({
     url: '/api/v0/mod/remove',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1026,16 +1010,15 @@ export function forumAddMod(params) {
   return request({
     url: '/api/v0/mod/add',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 export function removeTag(params) {
   return request({
     url: '/api/v0/post/removeTag',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1050,7 +1033,7 @@ export function addCollection(params) {
   return request({
     url: '/api/v0/collection/add',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1058,7 +1041,7 @@ export function addPostCollection(params) {
   return request({
     url: '/api/v0/post/addCollection',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1066,7 +1049,7 @@ export function listPosts(params) {
   return request({
     url: '/api/v0/collection/listPosts',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1074,15 +1057,15 @@ export function searchUserForAt(params) {
   return request({
     url: '/api/v0/search/searchUserForAt',
     method: 'get',
-    params
+    params,
   })
 }
 
 export function listTagPostCount(params) {
   return request({
-    url:  `/api/v0/forum/listTagPostCount`,
+    url: `/api/v0/forum/listTagPostCount`,
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1090,7 +1073,7 @@ export function phoneLogin(params) {
   return request({
     url: '/api/v0/phone/login',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1098,7 +1081,7 @@ export function disableComment(params) {
   return request({
     url: '/api/v0/post/disableComment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1106,7 +1089,7 @@ export function enableComment(params) {
   return request({
     url: '/api/v0/post/enableComment',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1114,7 +1097,7 @@ export function predictionsTournament(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/listPosts',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1122,7 +1105,7 @@ export function checkJoin(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/checkJoin',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1130,7 +1113,7 @@ export function pausePrediction(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/pausePrediction',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1138,25 +1121,23 @@ export function addToRecommend(params) {
   return request({
     url: '/api/v0/addRecommend',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 export function markPredictionRight(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/markRight',
     method: 'get',
-    params
+    params,
   })
 }
-
 
 export function predictionsjoin(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/join',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1164,7 +1145,7 @@ export function getTotalRank(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/getTotalRank',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1172,7 +1153,7 @@ export function predictionsGet(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/get',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1180,7 +1161,7 @@ export function forumtablelist(params) {
   return request({
     url: '/api/v0/forum/table/list',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1188,7 +1169,7 @@ export function tableGet(params) {
   return request({
     url: '/api/v0/forum/table/get',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1196,7 +1177,7 @@ export function bindUserWithWeChatOAuthWithPassword(params) {
   return request({
     url: '/api/v0/account/bindUserWithWeChatOAuthWithPassword',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1204,7 +1185,7 @@ export function loginWithWeChatOAuth(params) {
   return request({
     url: '/api/v0/account/loginWithWeChatOAuth',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -1212,10 +1193,8 @@ export function getSelfRank(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/getSelfRank',
     method: 'get',
-    params
+    params,
   })
 }
 
-
 /** 活动查询 */
-

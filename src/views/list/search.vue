@@ -1,21 +1,22 @@
 <template>
-  <div id="container"
-      class="dashboard-container container infinite-list"
-      ref="container"
-      :style="{ height: scrollHeight + 'px' }">
-    
+  <div
+    id="container"
+    class="dashboard-container container infinite-list"
+    ref="container"
+    :style="{ height: scrollHeight + 'px' }"
+  >
     <div>
-      <div style="height:50px;"></div>
+      <div style="height: 50px"></div>
       <div class="main_content">
         <!-- <div v-if="!ISPHONE" class="main_left">
           
-        </div> -->
+          </div> -->
         <div class="main_center">
           <div v-if="ISPHONE" class="search_icon">
             <el-input
               class="search_input"
               placeholder="请输入内容"
-              prefix-icon="el-icon-search"
+              :prefix-icon="ElIconSearch"
               @change="toSearch(keyword)"
               v-model="keyword"
             >
@@ -65,110 +66,106 @@
               :loadAll="loadAll"
             ></load-text>
           </div>
-
         </div>
         <!-- <div v-if="!ISPHONE" class="main_right">
          
-        </div> -->
-
+          </div> -->
       </div>
       <!-- <el-row :gutter="24">
-        <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
-          <div v-if="ISPHONE" class="search_icon">
-            <el-input
-              class="search_input"
-              placeholder="请输入内容"
-              prefix-icon="el-icon-search"
-              @change="toSearch(keyword)"
-              v-model="keyword"
-            >
-            </el-input>
-          </div>
-          <div class="navs" style="width: 640px; margin: 0px auto">
-            <div
-              @click="chooseType('post')"
-              :class="{ active: searchType == 'post' }"
-            >
-              帖 子
+          <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
+            <div v-if="ISPHONE" class="search_icon">
+              <el-input
+                class="search_input"
+                placeholder="请输入内容"
+                prefix-icon="el-icon-search"
+                @change="toSearch(keyword)"
+                v-model="keyword"
+              >
+              </el-input>
+            </div>
+            <div class="navs" style="width: 640px; margin: 0px auto">
+              <div
+                @click="chooseType('post')"
+                :class="{ active: searchType == 'post' }"
+              >
+                帖 子
+              </div>
+              <div
+                @click="chooseType('user')"
+                :class="{ active: searchType == 'user' }"
+              >
+                用 户
+              </div>
             </div>
             <div
-              @click="chooseType('user')"
-              :class="{ active: searchType == 'user' }"
+              class="grid-content"
+              style="
+                overflow: auto;
+                width: 640px;
+                max-width: 100%;
+                margin: 0 auto;
+              "
             >
-              用 户
-            </div>
-          </div>
-          <div
-            class="grid-content"
-            style="
-              overflow: auto;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-            "
-          >
-            <div v-if="searchType == 'post'">
-              <ListItem
-                :pagenum="params.pageNum"
-                :isindex="true"
-                :lists="lists"
-              ></ListItem>
-            </div>
-            <div v-if="searchType == 'user'">
-              <attentionItem
-                v-for="(item, index) in lists"
-                :item="item"
-                :key="index"
-              ></attentionItem>
-            </div>
+              <div v-if="searchType == 'post'">
+                <ListItem
+                  :pagenum="params.pageNum"
+                  :isindex="true"
+                  :lists="lists"
+                ></ListItem>
+              </div>
+              <div v-if="searchType == 'user'">
+                <attentionItem
+                  v-for="(item, index) in lists"
+                  :item="item"
+                  :key="index"
+                ></attentionItem>
+              </div>
 
-            <load-text
-              :ifcanget="ifcanget"
-              :hasContent="hasContent"
-              :loadAll="loadAll"
-            ></load-text>
-          </div>
-        </el-col>
-      </el-row> -->
+              <load-text
+                :ifcanget="ifcanget"
+                :hasContent="hasContent"
+                :loadAll="loadAll"
+              ></load-text>
+            </div>
+          </el-col>
+        </el-row> -->
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import * as api from "../../api/api";
+import { Search as ElIconSearch } from '@element-plus/icons'
+import { mapGetters } from 'vuex'
+import * as api from '../../api/api'
 
-import ListItem from "../../components/chaofan/ListItem.vue";
-import RightCom from "@/components/chaofan/RightCom";
-import loadText from "@/components/chaofan/loadText";
-import attentionItem from "@/components/chaofan/attentionItem.vue";
+import ListItem from '../../components/chaofan/ListItem.vue'
+import RightCom from '@/components/chaofan/RightCom'
+import loadText from '@/components/chaofan/loadText'
+import attentionItem from '@/components/chaofan/attentionItem.vue'
 
 export default {
-  name: "Dashboard",
-  // components: { adminDashboard, editorDashboard },
-  props:['q'],
   data() {
     return {
       hasContent: true,
-      currentRole: "adminDashboard",
+      currentRole: 'adminDashboard',
       count: 5,
       lists: [],
-      forumId: "",
+      forumId: '',
       params: {
         pageNum: 0,
       },
       options: [
         {
-          label: "最热",
-          value: "hot",
+          label: '最热',
+          value: 'hot',
         },
         {
-          label: "最新",
-          value: "new",
+          label: '最新',
+          value: 'new',
         },
         {
-          label: "新评",
-          value: "comment",
+          label: '新评',
+          value: 'comment',
         },
       ],
       isPhone: false,
@@ -176,10 +173,14 @@ export default {
       ifcanget: true,
       loadText: false,
       loadAll: false,
-      keyword: "",
-      searchType: "post",
-    };
+      keyword: '',
+      searchType: 'post',
+      ElIconSearch,
+    }
   },
+  name: 'Dashboard',
+  // components: { adminDashboard, editorDashboard },
+  props: ['q'],
   components: {
     ListItem,
     loadText,
@@ -187,59 +188,59 @@ export default {
   },
   watch: {
     q(v) {
-      this.scrollTop = 0;
-      this.lists = [];
-      this.keyword = v;
-      this.params.keyword = v;
-      this.params.pageNum = 1;
-      this.getLists();
+      this.scrollTop = 0
+      this.lists = []
+      this.keyword = v
+      this.params.keyword = v
+      this.params.pageNum = 1
+      this.getLists()
     },
   },
   computed: {
-    ...mapGetters(["roles", "islogin"]),
+    ...mapGetters(['roles', 'islogin']),
   },
   mounted() {
     if (document.body.clientWidth < 700) {
-      this.isPhone = true;
+      this.isPhone = true
     }
-    this.toPosition();
+    this.toPosition()
     // api.getMenu({pageNum:1,order:'new'}).then(res=>{
     //   console.log(res)
     // })
-    let self = this;
-    this.$refs.container.addEventListener("scroll", function () {
-      let scrollTop = self.$refs.container.scrollTop;
-      let conTop = self.$refs.container.scrollTop;
+    let self = this
+    this.$refs.container.addEventListener('scroll', function () {
+      let scrollTop = self.$refs.container.scrollTop
+      let conTop = self.$refs.container.scrollTop
       // 变量windowHeight是可视区的高度
-      let conHeight = self.$refs.container.clientHeight;
+      let conHeight = self.$refs.container.clientHeight
       // 变量scrollHeight是滚动条的总高度
-      let scrollHeight = self.$refs.container.scrollHeight - 4;
+      let scrollHeight = self.$refs.container.scrollHeight - 4
       //  console.log("距顶部" + scrollTop + "可视区高度" + windowHeight + "滚动条总高度" + scrollHeight);
       // console.log(conTop,conHeight,scrollHeight)
       if (
         conTop + conHeight > scrollHeight ||
         conTop + conHeight == scrollHeight
       ) {
-        console.log("到底了");
+        console.log('到底了')
         if (self.ifcanget) {
           // self.load()
-          self.getLists();
+          self.getLists()
         }
       }
-    });
+    })
   },
   created() {
-    let id = this.$route.path.split("/")[2];
-    this.params.keyword = this.$route.query.q;
-    this.keyword = this.$route.query.q;
-    this.load();
+    let id = this.$route.path.split('/')[2]
+    this.params.keyword = this.$route.query.q
+    this.keyword = this.$route.query.q
+    this.load()
   },
   methods: {
     chooseType(val) {
-      this.searchType = val;
-      this.params.pageNum = 1;
-      this.lists = [];
-      this.getLists();
+      this.searchType = val
+      this.params.pageNum = 1
+      this.lists = []
+      this.getLists()
     },
     inout(v) {
       if (this.$store.state.user.islogin) {
@@ -248,70 +249,70 @@ export default {
           api.joinForum({ forumId: this.params.forumId }).then((res) => {
             if (res.success) {
               this.$message({
-                message: "加入成功",
-                type: "success",
+                message: '加入成功',
+                type: 'success',
                 offset: 20,
-              });
-              this.getForumInfo();
+              })
+              this.getForumInfo()
             }
-          });
+          })
         } else if (v == 2) {
           api.leaveForum({ forumId: this.params.forumId }).then((res) => {
             if (res.success) {
               this.$message({
-                message: "退出成功",
-                type: "success",
+                message: '退出成功',
+                type: 'success',
                 offset: 20,
-              });
-              this.getForumInfo();
+              })
+              this.getForumInfo()
             }
-          });
+          })
         }
       } else {
-        this.showLogin("login");
+        this.showLogin('login')
       }
     },
     changes() {
-      localStorage.setItem("chao.fun.timeline.order", this.params.order);
-      this.params.pageNum = 1;
-      this.lists = [];
-      this.getLists();
+      localStorage.setItem('chao.fun.timeline.order', this.params.order)
+      this.params.pageNum = 1
+      this.lists = []
+      this.getLists()
     },
     getForumInfo() {
       api.getForumInfo({ forumId: this.params.forumId }).then((res) => {
-        this.forumInfo = res.data;
-      });
+        this.forumInfo = res.data
+      })
     },
     getLists() {
-      let params = this.params;
-      this.ifcanget = false;
-      if (this.searchType == "post") {
+      let params = this.params
+      this.ifcanget = false
+      if (this.searchType == 'post') {
         api.getSearch(params).then((res) => {
-          console.log(res);
-          this.ifcanget = true;
-          this.params.pageNum += 1;
+          console.log(res)
+          this.ifcanget = true
+          this.params.pageNum += 1
           if (!res.data.length) {
-            this.loadAll = true;
-            this.ifcanget = false;
+            this.loadAll = true
+            this.ifcanget = false
           }
-          this.lists.push(...res.data);
+          this.lists.push(...res.data)
           if (!this.lists.length) {
-            this.hasContent = false;
+            this.hasContent = false
           }
-        });
+        })
       } else {
         api.getSearchUser(params).then((res) => {
-          console.log(res);
-          this.ifcanget = true;
+          console.log(res)
+          this.ifcanget = true
           if (!res.data.length) {
-            this.loadAll = true;
-            this.ifcanget = false;
+            this.loadAll = true
+            this.ifcanget = false
           }
-          this.lists = res.data.data;
+          this.lists = res.data.data
           if (!this.lists.length) {
-            this.hasContent = false;
+            this.hasContent = false
           }
-        });
+        })
       }
     },
     load() {
@@ -327,17 +328,18 @@ export default {
       //   }
       // }
       if (this.ifcanget) {
-          this.params.pageNum += 1;
-          this.getLists();
-        }
+        this.params.pageNum += 1
+        this.getLists()
+      }
     },
   },
   activated() {
     // 重设滚动条位置
-    this.toPosition();
+    this.toPosition()
   },
-};
+}
 </script>
+
 <style lang="scss" scoped>
 .el-row {
   margin-bottom: 20px;

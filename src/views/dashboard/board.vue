@@ -1,31 +1,19 @@
 <template>
- <div>
-
- </div>
+  <div></div>
 </template>
 
 <script>
 import * as api from '../../api/api'
- export default {
-   name: '',
-   data(){
-     return {
-
-     }
-   },
-   components: {
-
-   },
-   created() {
-   },
-   mounted() {
-   },
-   methods: {
-   }
- }
+export default {
+  name: '',
+  data() {
+    return {}
+  },
+  components: {},
+  created() {},
+  mounted() {},
+  methods: {},
+}
 </script>
 
-<style type='text/scss' lang='scss' scoped>
-
- 
-</style>
+<style lang="scss" scoped type="text/scss"></style>

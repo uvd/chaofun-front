@@ -6,7 +6,7 @@ const state = {
   searchKeyword: '',
   formName: '',
   cateId: '',
-  path404:''
+  path404: '',
 }
 
 const mutations = {
@@ -19,9 +19,9 @@ const mutations = {
   SET_cateId: (state, cateId) => {
     state.cateId = cateId
   },
-  SET_PATH:(state,data)=>{
-    state.path404 =data
-  }
+  SET_PATH: (state, data) => {
+    state.path404 = data
+  },
 }
 
 const actions = {
@@ -34,12 +34,12 @@ const actions = {
   },
   SET_cateId({ commit }, cateId) {
     commit('SET_cateId', cateId)
-  }
+  },
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }
